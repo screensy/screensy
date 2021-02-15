@@ -11,6 +11,7 @@ UNRELEASED
 
 Added:
 - Initial Cargo project for the rendezvous server.
+- Initial index.html for the website.
 
 [0]: https://keepachangelog.com/en/1.0.0/
 [1]: https://semver.org/spec/v2.0.0.html
