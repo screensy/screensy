@@ -202,7 +202,8 @@ class Room {
      */
     handleViewerDisconnect(viewerId: string) {
         if (!(viewerId in this.viewers)) {
-            throw "viewerId does not exist.";
+            throw "Attempted to remove nonexistent viewer from room. " +
+            "This likely indicates an error in the server implementation.";
         }
 
         delete this.viewers[viewerId];
