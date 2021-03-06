@@ -1,0 +1,11 @@
+localhost {
+	root * ./screensy-website
+	file_server
+
+	@rendezvous {
+		header Connection *Upgrade*
+		header Upgrade websocket
+	}
+
+	reverse_proxy @rendezvous rendezvous:4000
+}

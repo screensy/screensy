@@ -15,6 +15,9 @@ Added:
 - The stylesheet for the website.
 - A tsconfig.json file for the client-side TypeScript.
 - The rendezvous server TypeScript code.
+- A Dockerfile for the rendezvous server.
+- A docker-compose file for easy deployment.
+- A Caddyfile.
 
 [0]: https://keepachangelog.com/en/1.0.0/
 [1]: https://semver.org/spec/v2.0.0.html
