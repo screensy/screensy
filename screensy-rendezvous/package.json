@@ -11,7 +11,10 @@
     "type": "git",
     "url": "git+https://github.com/screensy/screensy.git"
   },
-  "author": "Marijn van Wezel, Stef Gijsberts",
+  "contributors": [
+    "Marijn van Wezel",
+    "Stef Gijsberts"
+  ],
   "license": "GPL-3.0-or-later",
   "homepage": "https://github.com/screensy/screensy#readme",
   "devDependencies": {
