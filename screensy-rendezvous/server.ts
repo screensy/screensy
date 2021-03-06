@@ -278,7 +278,8 @@ class Server {
      */
     newRoom(roomId: string, broadcaster: WebSocket) {
         if (this.rooms.has(roomId)) {
-            throw "roomId already taken.";
+            throw "Attempted to create room with the same ID as an existing room. " +
+            "This likely indicates an error in the server implementation.";
         }
 
         this.rooms.set(roomId, new Room(broadcaster));
