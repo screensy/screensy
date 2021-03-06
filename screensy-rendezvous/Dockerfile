@@ -1,14 +1,15 @@
-FROM 15.11-alpine3.13
+FROM node:15.11-alpine3.13
 
 WORKDIR /home/node/app
 
 COPY package.json ./
+COPY tsconfig.json ./
 COPY server.ts ./
 
 RUN npm install
-USER node
-
 RUN npm run build
+
+USER node
 
 CMD ["npm", "start"]
 
