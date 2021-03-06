@@ -80,7 +80,7 @@ main();
  * The main entry point.
  */
 function main(): void {
-    const socket = new websocket.Server({ "port": 4000 });
+    const socket = new websocket.Server({"port": 4000});
     const server = new Server();
 
     socket.on("connection", (socket: WebSocket) => server.onConnection(socket));
@@ -160,7 +160,7 @@ class Room {
     private counter: number = 0;
 
     private broadcaster: WebSocket;
-    private viewers: { [id:string]: WebSocket } = {};
+    private viewers: { [id: string]: WebSocket } = {};
 
     /**
      * Room constructor.
@@ -327,7 +327,7 @@ function instanceOfFromBroadcasterMessage(object: any): object is FromBroadcaste
 }
 
 /**
- * Returns true if and only if the given object is a FromViewerMessage.
+ * Returns true if and only if the given object is a FromViewerMessage.q
  *
  * @param object
  */
