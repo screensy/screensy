@@ -327,7 +327,7 @@ function instanceOfFromBroadcasterMessage(object: any): object is FromBroadcaste
 }
 
 /**
- * Returns true if and only if the given object is a FromViewerMessage.q
+ * Returns true if and only if the given object is a FromViewerMessage.
  *
  * @param object
  */
