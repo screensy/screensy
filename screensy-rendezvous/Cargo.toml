@@ -1,8 +1,0 @@
-[package]
-name = "screensy-rendezvous"
-version = "0.1.0"
-authors = ["Marijn van Wezel", "Stef Gijsberts"]
-edition = "2018"
-license = "GPL-3.0-or-later"
-
-[dependencies]

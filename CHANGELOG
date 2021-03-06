@@ -10,7 +10,6 @@ UNRELEASED
 ----------
 
 Added:
-- Initial Cargo project for the rendezvous server.
 - The static index.html file for the website.
 - The client-side TypeScript code.
 - The stylesheet for the website.
