@@ -74,8 +74,6 @@ interface MessageBroadcasterDisconnected {
 type FromBroadcasterMessage = MessageJoin | MessageWebRTCBroadcaster | MessageRequestViewers;
 type FromViewerMessage = MessageJoin | MessageWebRTCViewer;
 
-main();
-
 /**
  * The main entry point.
  */
@@ -385,3 +383,6 @@ function instanceOfMessageWebRTCViewer(object: any): object is MessageWebRTCView
 
     return goodType && goodKind && goodMessage;
 }
+
+main();
+
