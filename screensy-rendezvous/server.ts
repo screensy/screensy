@@ -74,6 +74,42 @@ interface MessageBroadcasterDisconnected {
 type FromBroadcasterMessage = MessageJoin | MessageWebRTCBroadcaster | MessageRequestViewers;
 type FromViewerMessage = MessageJoin | MessageWebRTCViewer;
 
+function instanceOfMessageJoin(object: any): object is MessageJoin {
+    const goodType = "type" in object && object.type === "join";
+    const goodRoomId = "roomId" in object && typeof object.roomId === "string";
+
+    return goodType && goodRoomId;
+}
+
+function instanceOfMessageWebRTCBroadcaster(object: any): object is MessageWebRTCBroadcaster {
+    const goodType = "type" in object && object.type === "webrtcbroadcaster";
+    const goodViewerId = "viewerId" in object && typeof object.viewerId === "string";
+    const goodKind = "kind" in object && ["offer", "answer", "candidate"].includes(object.kind);
+    const goodMessage = "message" in object;
+
+    return goodType && goodViewerId && goodKind && goodMessage;
+}
+
+function instanceOfMessageRequestViewers(object: any): object is MessageRequestViewers {
+    return "type" in object && object.type === "requestviewers";
+}
+
+function instanceOfMessageWebRTCViewer(object: any): object is MessageWebRTCViewer {
+    const goodType = "type" in object && object.type === "webrtcviewer";
+    const goodKind = "kind" in object && ["offer", "answer", "candidate"].includes(object.kind);
+    const goodMessage = "message" in object;
+
+    return goodType && goodKind && goodMessage;
+}
+
+function instanceOfFromBroadcasterMessage(object: any): object is FromBroadcasterMessage {
+    return instanceOfMessageJoin(object) || instanceOfMessageWebRTCBroadcaster(object) || instanceOfMessageRequestViewers(object);
+}
+
+function instanceOfFromViewerMessage(object: any): object is FromViewerMessage {
+    return instanceOfMessageJoin(object) || instanceOfMessageWebRTCViewer(object);
+}
+
 /**
  * Represents a screensharing room.
  */
@@ -134,7 +170,12 @@ class Room {
      *
      * @param msg The message
      */
-    handleBroadcasterMessage(msg: FromBroadcasterMessage) {
+    handleBroadcasterMessage(msg: any) {
+        if (!instanceOfFromBroadcasterMessage(msg)) {
+            // The given message is not valid
+            return;
+        }
+
         switch (msg.type) {
             case "webrtcbroadcaster":
                 const viewerId = msg.viewerId;
@@ -165,8 +206,6 @@ class Room {
                 }
 
                 break;
-            default:
-                break;
         }
     }
 
@@ -176,7 +215,12 @@ class Room {
      * @param viewerId The ID of the viewer that sent the message
      * @param msg The message
      */
-    handleViewerMessage(viewerId: string, msg: FromViewerMessage) {
+    handleViewerMessage(viewerId: string, msg: any) {
+        if (!instanceOfFromViewerMessage(msg)) {
+            // The given message is not valid
+            return;
+        }
+
         switch (msg.type) {
             case "webrtcviewer":
                 const message: MessageWebRTCBroadcaster = {
@@ -188,9 +232,6 @@ class Room {
 
                 this.broadcaster.send(JSON.stringify(message));
 
-                break;
-            default:
-                // Invalid message type
                 break;
         }
     }
@@ -306,6 +347,8 @@ function main() {
     const server = new Server();
 
     socket.on("connection", (socket: WebSocket) => server.onConnection(socket));
+
+    console.log("Server started on port " + socket.options.port);
 }
 
 main();
