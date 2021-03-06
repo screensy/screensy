@@ -142,7 +142,7 @@ class Room {
      *
      * @param viewer The WebSocket of the viewer that joined the room
      */
-    addViewer(viewer: WebSocket) {
+    addViewer(viewer: WebSocket): void {
         const id: string = (this.counter++).toString();
 
         viewer.onmessage = (event: MessageEvent) => this.handleViewerMessage(id, JSON.parse(event.data));
@@ -170,7 +170,7 @@ class Room {
      *
      * @param msg The message
      */
-    handleBroadcasterMessage(msg: any) {
+    handleBroadcasterMessage(msg: any): void {
         if (!instanceOfFromBroadcasterMessage(msg)) {
             // The given message is not valid
             return;
@@ -215,7 +215,7 @@ class Room {
      * @param viewerId The ID of the viewer that sent the message
      * @param msg The message
      */
-    handleViewerMessage(viewerId: string, msg: any) {
+    handleViewerMessage(viewerId: string, msg: any): void {
         if (!instanceOfFromViewerMessage(msg)) {
             // The given message is not valid
             return;
@@ -241,7 +241,7 @@ class Room {
      *
      * @param viewerId The ID of the viewer that disconnected
      */
-    handleViewerDisconnect(viewerId: string) {
+    handleViewerDisconnect(viewerId: string): void {
         if (!(viewerId in this.viewers)) {
             throw "Attempted to remove nonexistent viewer from room. " +
             "This likely indicates an error in the server implementation.";
@@ -261,7 +261,7 @@ class Room {
     /**
      * Closes the room and tells all viewers the broadcaster has disconnected.
      */
-    closeRoom() {
+    closeRoom(): void {
         for (const viewerId in this.viewers) {
             const viewer = this.viewers[viewerId];
             const messageBroadcasterDisconnected: MessageBroadcasterDisconnected = {
@@ -287,7 +287,7 @@ class Server {
      *
      * @param socket
      */
-    onConnection(socket: WebSocket) {
+    onConnection(socket: WebSocket): void {
         socket.onmessage = (event: MessageEvent) => {
             const message = JSON.parse(event.data);
 
@@ -318,7 +318,7 @@ class Server {
      * @param roomId
      * @param broadcaster
      */
-    newRoom(roomId: string, broadcaster: WebSocket) {
+    newRoom(roomId: string, broadcaster: WebSocket): void {
         if (this.rooms.has(roomId)) {
             throw "Attempted to create room with the same ID as an existing room. " +
             "This likely indicates an error in the server implementation.";
@@ -333,7 +333,7 @@ class Server {
      *
      * @param roomId The ID of the room to close
      */
-    closeRoom(roomId: string) {
+    closeRoom(roomId: string): void {
         this.rooms.get(roomId)?.closeRoom();
         this.rooms.delete(roomId);
     }
@@ -342,7 +342,7 @@ class Server {
 /**
  * The main entry point.
  */
-function main() {
+function main(): void {
     const socket = new websocket.Server({ "port": 4000 });
     const server = new Server();
 

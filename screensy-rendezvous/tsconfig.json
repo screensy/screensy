@@ -8,6 +8,8 @@
     "strictNullChecks": true,
     "alwaysStrict": true,
     "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
     "strict": true,
     "lib": [
       "ES2018",
