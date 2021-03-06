@@ -109,8 +109,6 @@ class Room {
     addViewer(viewer: WebSocket) {
         const id: string = (this.counter++).toString();
 
-        logInfo("Viewer connected (" + id + ").");
-
         viewer.onmessage = (event: MessageEvent) => this.handleViewerMessage(id, JSON.parse(event.data));
         viewer.onclose = (_event: CloseEvent) => this.handleViewerDisconnect(id);
 
@@ -143,7 +141,7 @@ class Room {
                 const viewer = this.viewers[viewerId];
 
                 if (viewer == null) {
-                    logWarning("Broadcaster sent message to non-existent viewer (" + viewerId + "): " + JSON.stringify(msg));
+                    // No viewer with the ID "viewerId" exists
                     break;
                 }
 
@@ -168,7 +166,6 @@ class Room {
 
                 break;
             default:
-                logWarning("Invalid message received from broadcaster: " + JSON.stringify(msg));
                 break;
         }
     }
@@ -193,7 +190,7 @@ class Room {
 
                 break;
             default:
-                logWarning("Invalid message received from viewer: " + JSON.stringify(msg));
+                // Invalid message type
                 break;
         }
     }
@@ -217,8 +214,6 @@ class Room {
         };
 
         this.broadcaster.send(JSON.stringify(message));
-
-        logInfo("Viewer disconnected (" + viewerId + ").");
     }
 
     /**
@@ -256,7 +251,6 @@ class Server {
 
             if (message.type != "join") {
                 // No messages are valid until a client has sent a "JOIN"
-                logWarning("Invalid message type received: client has not joined, but sent " + message.type + ".");
                 return;
             }
 
@@ -264,7 +258,6 @@ class Server {
 
             if (roomId == null || roomId.length < 1) {
                 // No, or an invalid roomId was given in the message
-                logWarning("Received invalid room ID (" + roomId + ").");
                 return;
             }
 
@@ -290,8 +283,6 @@ class Server {
 
         this.rooms.set(roomId, new Room(broadcaster));
         broadcaster.onclose = (_event: CloseEvent) => this.closeRoom(roomId);
-
-        logInfo("New room created (" + roomId + ").");
     }
 
     /**
@@ -302,37 +293,7 @@ class Server {
     closeRoom(roomId: string) {
         this.rooms.get(roomId)?.closeRoom();
         this.rooms.delete(roomId);
-
-        logInfo("Room closed (" + roomId + ").");
     }
-}
-
-/**
- * Log some information.
- *
- * @param message
- */
-function logInfo(message: string) {
-    logGeneric("info", message);
-}
-
-/**
- * Log a warning.
- *
- * @param message
- */
-function logWarning(message: string) {
-    logGeneric("warning", message);
-}
-
-/**
- * Generic logging function to log a message of any log-level.
- *
- * @param type
- * @param message
- */
-function logGeneric(type: string, message: string) {
-    console.log("[" + (new Date()).toISOString() + "/" + type.toUpperCase() + "] " + message);
 }
 
 /**
