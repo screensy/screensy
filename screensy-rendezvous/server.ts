@@ -1,7 +1,4 @@
-import * as express from "express";
-import * as https from "https";
 import * as websocket from "ws";
-import * as fs from "fs";
 
 /**
  * Tells the server the client wants to join the given room
@@ -311,21 +308,6 @@ class Server {
 }
 
 /**
- * Creates a new HTTPS server and returns that.
- */
-function createServer() {
-    const app = express();
-    const httpsServer = https.createServer({
-        "key": fs.readFileSync("key.pem"),
-        "cert": fs.readFileSync("cert.pem")
-    }, app);
-
-    app.use(express.static(__dirname + "/public"));
-
-    return httpsServer;
-}
-
-/**
  * Log some information.
  *
  * @param message
@@ -356,12 +338,11 @@ function logGeneric(type: string, message: string) {
 /**
  * The main entry point.
  */
-(function main() {
-    const httpsServer = createServer();
-    const socket = new websocket.Server({ "server": httpsServer });
+function main() {
+    const socket = new websocket.Server({ "port": 4000 });
     const server = new Server();
 
-    socket.on("connection", server.onConnection.bind(server));
+    socket.on("connection", (socket: WebSocket) => server.onConnection(socket));
+}
 
-    httpsServer.listen(4000, () => logInfo("Server is running."));
-})();
+main();
