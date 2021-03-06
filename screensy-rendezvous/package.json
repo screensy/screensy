@@ -4,8 +4,7 @@
   "description": "The signaling server for screensy",
   "main": "server.js",
   "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
