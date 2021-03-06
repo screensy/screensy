@@ -102,7 +102,7 @@ class Broadcaster implements Client {
     private readonly rtcConfig: RTCConfiguration;
     private readonly mediaStream: MediaStream;
 
-    private readonly viewers: { [id:string]: RTCPeerConnection } = {};
+    private readonly viewers: { [id: string]: RTCPeerConnection } = {};
 
     /**
      * Broadcaster constructor.
@@ -172,7 +172,7 @@ class Broadcaster implements Client {
 
                 // https://developer.mozilla.org/en-US/docs/Web/API/RTCRtpSender/setParameters#currently_compatible_implementation
                 if (!rtcSendParameters.encodings) {
-                    rtcSendParameters.encodings = [{ }];
+                    rtcSendParameters.encodings = [{}];
                 }
 
                 if (sender.track.kind === "audio") {
@@ -384,12 +384,12 @@ class Room {
      */
     constructor(roomId: string) {
         this.roomId = roomId;
-        this.videoElement = <HTMLVideoElement> document.getElementById("stream");
+        this.videoElement = <HTMLVideoElement>document.getElementById("stream");
         this.webSocket = new WebSocket("wss://" + window.location.host);
         this.sendMessage = async (message: Message) => this.webSocket.send(JSON.stringify(message));
         this.rtcConfig = {
             iceServers: [
-                { "urls": "stun:stun.stunprotocol.org:3478" }
+                {"urls": "stun:stun.stunprotocol.org:3478"}
             ],
             iceCandidatePoolSize: 8
         };
@@ -415,13 +415,13 @@ class Room {
             this.webSocket.onmessage = (event: MessageEvent) => client.handleMessage(JSON.parse(event.data));
 
             if (isBroadcaster) {
-                await this.sendMessage({ "type": "requestviewers" });
+                await this.sendMessage({"type": "requestviewers"});
             }
 
             this.setDocumentTitle();
         };
 
-        await this.sendMessage( { "type": "join", "roomId": this.roomId.toLowerCase() } );
+        await this.sendMessage({"type": "join", "roomId": this.roomId.toLowerCase()});
     }
 
     /**
@@ -485,11 +485,11 @@ class Room {
 
         const videoConstraints: MediaTrackConstraints | boolean = true;
         const audioConstraints: MediaTrackConstraints | boolean = {
-            "channelCount": { "ideal": 2 },
-            "sampleRate": { "ideal": 192000 },
-            "noiseSuppression": { "ideal": false },
-            "echoCancellation": { "ideal": false },
-            "autoGainControl": { "ideal": false }
+            "channelCount": {"ideal": 2},
+            "sampleRate": {"ideal": 192000},
+            "noiseSuppression": {"ideal": false},
+            "echoCancellation": {"ideal": false},
+            "autoGainControl": {"ideal": false}
         };
 
         const mediaConstraints: MediaStreamConstraints = {
@@ -575,7 +575,7 @@ async function main(_event: Event) {
         location.reload();
     };
 
-    const room = new Room( window.location.hash.substring(1) );
+    const room = new Room(window.location.hash.substring(1));
     await room.join();
 }
 
