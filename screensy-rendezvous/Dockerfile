@@ -3,6 +3,7 @@ FROM node:14.16-alpine3.13
 WORKDIR /home/node/app
 
 COPY package.json ./
+COPY package-lock.json ./
 COPY tsconfig.json ./
 COPY server.ts ./
 
