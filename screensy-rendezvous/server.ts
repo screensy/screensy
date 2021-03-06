@@ -122,7 +122,7 @@ class Server {
             } else {
                 this.newRoom(roomId, socket);
             }
-        }
+        };
     }
 
     /**
@@ -192,7 +192,7 @@ class Room {
         }
 
         switch (msg.type) {
-            case "webrtcbroadcaster":
+            case "webrtcbroadcaster": {
                 const viewerId = msg.viewerId;
                 const viewer = this.viewers[viewerId];
 
@@ -210,7 +210,8 @@ class Room {
                 viewer.send(JSON.stringify(message));
 
                 break;
-            case "requestviewers":
+            }
+            case "requestviewers": {
                 for (const viewerId in this.viewers) {
                     const messageViewer: MessageViewer = {
                         "type": "viewer",
@@ -221,6 +222,7 @@ class Room {
                 }
 
                 break;
+            }
         }
     }
 
@@ -265,7 +267,7 @@ class Room {
         }
 
         switch (msg.type) {
-            case "webrtcviewer":
+            case "webrtcviewer": {
                 const message: MessageWebRTCBroadcaster = {
                     "type": "webrtcbroadcaster",
                     "kind": msg.kind,
@@ -276,6 +278,7 @@ class Room {
                 this.broadcaster.send(JSON.stringify(message));
 
                 break;
+            }
         }
     }
 
