@@ -3,9 +3,6 @@ services:
         rendezvous:
                 build: "./screensy-rendezvous"
                 restart: unless-stopped
-                ports:
-                        - 4000:4000
-
         caddy:
                 image: "caddy:2.3.0-alpine"
                 restart: unless-stopped
@@ -15,4 +12,3 @@ services:
                 ports:
                         - 443:443
                         - 80:80
-
