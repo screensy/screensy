@@ -1,16 +1,20 @@
-SCREENSY
-========
+                                    SCREENSY
+
+                        Stef Gijsberts, Marijn van Wezel
+                                   2021-03-16
+
 
 Screensy is a simple screen sharing solution. Nothing more, nothing less.
 
-It consists of two parts, the rendezvous part which runs on the server, and the website
-part which runs in the user's browser. The rendezvous server is only used for protocol
-negotiation and discovery of viewers. The video stream is directly sent from the browser
-of the broadcaster to the browser of each viewer. All traffic (between rendezvous and
-browser and between browsers) is encrypted by default.
+It consists of two parts, the rendezvous part which runs on the server, and the
+website part which runs in the user's browser. The rendezvous server is only
+used for protocol negotiation and discovery of viewers. The video stream is
+directly sent from the browser of the broadcaster to the browser of each
+viewer. All traffic (between rendezvous and browser and between browsers) is
+encrypted by default.
 
-There are two ways to set screensy up. If you don't know which one to choose, we recommend
-using Docker.
+There are two ways to set screensy up. If you don't know which one to choose,
+we recommend using Docker.
 
 
 SERVER SETUP (WITH DOCKER)
@@ -30,7 +34,8 @@ SERVER SETUP (WITH DOCKER)
     cd screensy/
 
 4. Change the first line of the included Caddyfile to your domain. For example
-   if you want to host screensy on the domain "example.com", use this Caddyfile:
+   if you want to host screensy on the domain "example.com", use this
+   Caddyfile:
 
     example.com {
     	reverse_proxy website:80
@@ -43,7 +48,8 @@ SERVER SETUP (WITH DOCKER)
     	reverse_proxy @rendezvous rendezvous:4000
     }
 
-5. Start the Docker containers using Docker Compose, by running the following command:
+5. Start the Docker containers using Docker Compose, by running the following
+   command:
 
     docker-compose up -d
 
@@ -63,20 +69,20 @@ SERVER SETUP (WITHOUT DOCKER)
     git clone https://github.com/screensy/screensy.git
     cd screensy/
 
-3. Install the required development dependencies for the rendezvous server, using the following
-   command:
+3. Install the required development dependencies for the rendezvous server,
+   using the following command:
 
     cd screensy-rendezvous && npm install --only=development && cd ..
 
-4. Compile the TypeScript files in both the "screensy-rendezvous" as well as the
-   "screensy-website" directory, using the following commands:
+4. Compile the TypeScript files in both the "screensy-rendezvous" as well as
+   the "screensy-website" directory, using the following commands:
 
     cd screensy-rendezvous && tsc && cd ..
     cd screensy-website && tsc && cd ..
 
-5. Set up the static file server to serve the files in the "screensy-website" directory.
-   Do not use the standard port "80" for this, as it will conflict with the reverse
-   proxy we will set up in step 7.
+5. Set up the static file server to serve the files in the "screensy-website"
+   directory. Do not use the standard port "80" for this, as it will conflict
+   with the reverse proxy we will set up in step 7.
 
    We use the following Caddyfile for this:
 
@@ -88,8 +94,8 @@ SERVER SETUP (WITHOUT DOCKER)
             file_server
     }
 
-6. Start the rendezvous server located in "screensy-rendezvous" directory, using the following
-   commands:
+6. Start the rendezvous server located in "screensy-rendezvous" directory,
+   using the following commands:
 
     cd screensy-rendezvous
     npm install --only=production
@@ -97,8 +103,8 @@ SERVER SETUP (WITHOUT DOCKER)
 
    This starts a WebSocket server on port 4000.
 
-7. Reverse proxy both the static file server and the rendezvous server. We use the following
-   Caddyfile for this:
+7. Reverse proxy both the static file server and the rendezvous server. We use
+   the following Caddyfile for this:
 
     example.com {
         reverse_proxy localhost:8080
