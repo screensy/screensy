@@ -16,6 +16,7 @@ Added:
 - A tsconfig.json file for the client-side TypeScript.
 - The rendezvous server TypeScript code.
 - A Dockerfile for the rendezvous server.
+- A Dockerfile for the website.
 - A docker-compose file for easy deployment.
 - A Caddyfile.
 

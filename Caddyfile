@@ -1,6 +1,5 @@
 localhost {
-	root * ./screensy-website
-	file_server
+	reverse_proxy website:80
 
 	@rendezvous {
 		header Connection *Upgrade*

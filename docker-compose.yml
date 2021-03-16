@@ -3,12 +3,14 @@ services:
         rendezvous:
                 build: "./screensy-rendezvous"
                 restart: unless-stopped
+        website:
+                build: "./screensy-website"
+                restart: unless-stopped
         caddy:
                 image: "caddy:2.3.0-alpine"
                 restart: unless-stopped
                 volumes:
                         - ./Caddyfile:/etc/caddy/Caddyfile
-                        - ./screensy-website:/srv/screensy-website
                 ports:
                         - 443:443
                         - 80:80
