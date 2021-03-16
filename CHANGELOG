@@ -9,6 +9,9 @@ Semantic Versioning [1].
 UNRELEASED
 ----------
 
+1.0.0 - 2021-03-16
+------------------
+
 Added:
 - The static index.html file for the website.
 - The client-side TypeScript code.
@@ -23,4 +26,3 @@ Added:
 
 [0]: https://keepachangelog.com/en/1.0.0/
 [1]: https://semver.org/spec/v2.0.0.html
-
