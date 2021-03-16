@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "The signaling server for screensy",
   "main": "server.js",
-  "scripts": {
-    "build": "tsc"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/screensy/screensy.git"
