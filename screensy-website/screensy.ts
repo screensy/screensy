@@ -385,7 +385,11 @@ class Room {
     constructor(roomId: string) {
         this.roomId = roomId;
         this.videoElement = <HTMLVideoElement>document.getElementById("stream");
-        this.webSocket = new WebSocket("wss://" + window.location.host);
+
+        const webSocketProtocol = window.location.protocol === "http" ? "ws" : "wss";
+        const webSocketUrl = webSocketProtocol + "://" + location.host + location.pathname;
+
+        this.webSocket = new WebSocket(webSocketUrl);
         this.sendMessage = async (message: Message) => this.webSocket.send(JSON.stringify(message));
         this.rtcConfig = {
             iceServers: [

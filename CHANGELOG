@@ -10,6 +10,11 @@ Semantic Versioning [1].
 UNRELEASED
 ----------
 
+Changed:
+- WebSocket protocol choice to be based on whether HTTPS is used.
+- WebSocket URL to include the current path. This allows screensy to be hosted
+  on a path that is not the root path.
+
 Removed:
 - Version number in rendezvous-server package.json.
 
