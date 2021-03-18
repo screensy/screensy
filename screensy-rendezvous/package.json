@@ -1,6 +1,5 @@
 {
   "name": "screensy-rendezvous",
-  "version": "1.0.0",
   "description": "The signaling server for screensy",
   "main": "server.js",
   "repository": {
