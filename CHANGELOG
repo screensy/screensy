@@ -10,6 +10,10 @@ Semantic Versioning [1].
 UNRELEASED
 ----------
 
+
+1.0.1 - 2021-03-18
+------------------
+
 Changed:
 - WebSocket protocol choice to be based on whether HTTPS is used.
 - WebSocket URL to include the current path. This allows screensy to be hosted
