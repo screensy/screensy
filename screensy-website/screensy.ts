@@ -393,7 +393,12 @@ class Room {
         this.sendMessage = async (message: Message) => this.webSocket.send(JSON.stringify(message));
         this.rtcConfig = {
             iceServers: [
-                {"urls": "stun:stun.stunprotocol.org:3478"}
+                {"urls": "stun:" + location.hostname},
+                {
+                    "urls": "turn:" + location.hostname,
+                    "username": "screensy",
+                    "credential": "screensy",
+                }
             ],
             iceCandidatePoolSize: 8
         };

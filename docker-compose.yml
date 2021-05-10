@@ -14,3 +14,11 @@ services:
                 ports:
                         - 443:443
                         - 80:80
+        turn:
+                image: "coturn/coturn:4.5.2"
+                restart: unless-stopped
+                # Use the host network directly as Docker performs badly with
+                # large port ranges
+                network_mode: "host"
+                volumes:
+                        - ./turnserver.conf:/etc/coturn/turnserver.conf

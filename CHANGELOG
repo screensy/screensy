@@ -10,6 +10,14 @@ Semantic Versioning [1].
 UNRELEASED
 ----------
 
+Added:
+- A STUN server.
+- A TURN server.
+
+Changed:
+- The client to use the included STUN or TURN server instead of an external
+  server.
+
 
 1.0.3 - 2021-06-06
 ------------------
