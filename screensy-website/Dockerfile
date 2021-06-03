@@ -5,7 +5,7 @@ WORKDIR /home/node/app
 COPY tsconfig.json ./
 COPY screensy.ts ./
 
-RUN npm install typescript -g
+RUN npm install typescript@4.2.3 -g
 RUN tsc
 
 FROM caddy:2.3.0-alpine

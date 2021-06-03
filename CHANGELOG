@@ -11,6 +11,13 @@ UNRELEASED
 ----------
 
 
+1.0.2 - 2021-06-03
+------------------
+
+Changed:
+- The website Dockerfile to use a specific version of TypeScript.
+
+
 1.0.1 - 2021-03-18
 ------------------
 
