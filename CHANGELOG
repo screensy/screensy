@@ -11,6 +11,13 @@ UNRELEASED
 ----------
 
 
+1.0.3 - 2021-06-06
+------------------
+
+Fixed:
+- The room name generator to use more words.
+
+
 1.0.2 - 2021-06-03
 ------------------
 

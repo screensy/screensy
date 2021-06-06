@@ -530,26 +530,39 @@ function generateRoomName(): string {
     const adjectives = [
         "large", "small", "beautiful", "heavenly", "red", "yellow", "green",
         "orange", "purple", "massive", "tasty", "cheap", "fancy", "expensive",
-        "crazy", "round", "square", "triangular", "powered", "blue"
+        "crazy", "round", "triangular", "powered", "blue", "heavy", "square",
+        "rectangular", "lit", "authentic", "broken", "busy", "original",
+        "special", "thick", "thin", "pleasant", "sharp", "steady", "happy",
+        "delighted", "stunning"
     ];
 
     const pluralNouns = [
         "monsters", "people", "cars", "buttons", "vegetables", "students",
         "computers", "robots", "lamps", "doors", "wizards", "books", "shirts",
-        "pens", "guitars", "bottles", "microphones", "pants", "drums", "plants"
+        "pens", "guitars", "bottles", "microphones", "pants", "drums", "plants",
+        "batteries", "barrels", "birds", "coins", "clothes", "deals", "crosses",
+        "devices", "desktops", "diamonds", "fireworks", "funds", "guitars",
+        "pianos", "harmonies", "levels", "mayors", "mechanics", "networks",
+        "ponds", "trees", "proofs", "flowers", "houses", "speakers", "phones",
+        "chargers"
     ];
 
     const verbs = [
         "break", "roll", "flip", "grow", "bake", "create", "cook", "smack",
         "drink", "close", "display", "run", "move", "flop", "wrap", "enter",
-        "dig", "fly", "swim", "draw"
+        "dig", "fly", "swim", "draw", "celebrate", "communicate", "encompass",
+        "forgive", "negotiate", "pioneer", "photograph", "play", "scratch",
+        "stabilize", "weigh", "wrap", "yield", "return", "update", "understand",
+        "propose", "succeed", "stretch", "submit"
     ];
 
     const adverbs = [
         "gingerly", "thoroughly", "heavily", "crazily", "mostly", "fast",
         "slowly", "merrily", "quickly", "heavenly", "cheerfully", "honestly",
         "politely", "bravely", "vivaciously", "fortunately", "innocently",
-        "kindly", "eagerly", "elegantly"
+        "kindly", "eagerly", "elegantly", "vividly", "reasonably", "rudely",
+        "wisely", "thankfully", "wholly", "adorably", "happily", "firmly",
+        "fast", "simply", "wickedly"
     ];
 
     const idxAdjective = Math.floor(Math.random() * adjectives.length);
