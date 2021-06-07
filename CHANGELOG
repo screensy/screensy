@@ -10,6 +10,10 @@ Semantic Versioning [1].
 UNRELEASED
 ----------
 
+
+1.1.0 - 2021-06-07
+------------------
+
 Added:
 - A STUN server.
 - A TURN server.
