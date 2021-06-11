@@ -11,7 +11,7 @@ UNRELEASED
 ----------
 
 Changed:
-- The video tag to use the "playsinline" attribute.
+- The stream so it is no longer locked to fullscreen on mobile devices.
 
 
 1.1.0 - 2021-06-07
