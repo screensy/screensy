@@ -10,6 +10,9 @@ Semantic Versioning [1].
 UNRELEASED
 ----------
 
+Changed:
+- The video tag to use the "playsinline" attribute.
+
 
 1.1.0 - 2021-06-07
 ------------------
