@@ -11,61 +11,61 @@ UNRELEASED
 ----------
 
 Changed:
-- The stream so it is no longer locked to fullscreen on mobile devices.
+- In the client, the stream is no longer locked to full-screen on mobile
+  devices.
 
 
 1.1.0 - 2021-06-07
 ------------------
 
 Added:
-- A STUN server.
-- A TURN server.
+- Include a STUN+TURN server in the Docker setup.
 
 Changed:
-- The client to use the included STUN or TURN server instead of an external
-  server.
+- The client now assumes that a STUN or TURN server is hosted on the same domain
+  as screensy. Previously, the client used an external STUN server, which is an
+  unreliable solution. Also, the client did not use a TURN server.
 
 
 1.0.3 - 2021-06-06
 ------------------
 
 Fixed:
-- The room name generator to use more words.
+- Add words to the list that the client uses to generate room names. This
+  decreases the chance that two broadcasters happen to generate the same room
+  name.
 
 
 1.0.2 - 2021-06-03
 ------------------
 
-Changed:
-- The website Dockerfile to use a specific version of TypeScript.
+Fixed:
+- Fix the failing build of the screensy-website Docker image. This happened
+  because we did not specify a version of the TypeScript compiler.
 
 
 1.0.1 - 2021-03-18
 ------------------
 
 Changed:
-- WebSocket protocol choice to be based on whether HTTPS is used.
-- WebSocket URL to include the current path. This allows screensy to be hosted
-  on a path that is not the root path.
+- Previously, the website client always used WebSocket Secure for a connection
+  to the rendezvous server. Now, the client uses WebSocket if the website is
+  served via HTTP, and WebSocket Secure if the website is served via HTTPS.
 
-Removed:
-- Version number in rendezvous-server package.json.
+Added:
+- Screensy can now be hosted on a path that is not the root path.
 
 
 1.0.0 - 2021-03-16
 ------------------
 
 Added:
-- The static index.html file for the website.
-- The client-side TypeScript code.
-- The stylesheet for the website.
-- A tsconfig.json file for the client-side TypeScript.
-- The rendezvous server TypeScript code.
-- A Dockerfile for the rendezvous server.
-- A Dockerfile for the website.
-- A docker-compose file for easy deployment.
-- A Caddyfile.
-- A README.
+- Add the website.
+- Add the rendezvous (signaling) server.
+- Add Dockerfiles and a docker-compose file for easy deployment with Docker.
+- Add a README with instructions on setting up screensy.
+- Add this CHANGELOG.
+
 
 [0]: https://keepachangelog.com/en/1.0.0/
 [1]: https://semver.org/spec/v2.0.0.html
