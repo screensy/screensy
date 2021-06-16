@@ -14,6 +14,11 @@ Changed:
 - In the client, the stream is no longer locked to full-screen on mobile
   devices.
 
+Security:
+- Update the dependency 'ws' of the rendezvous server. The old version had a
+  vulnerability that can be misused to significantly slow down a webSocket
+  server [2].
+
 
 1.1.0 - 2021-06-07
 ------------------
@@ -69,3 +74,4 @@ Added:
 
 [0]: https://keepachangelog.com/en/1.0.0/
 [1]: https://semver.org/spec/v2.0.0.html
+[2]: https://www.npmjs.com/advisories/1748
