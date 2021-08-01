@@ -81,6 +81,38 @@ function wait(target: EventTarget, listenerName: string): Promise<Event> {
     });
 }
 
+/**
+ * Displays the popup with the given name. Does nothing if the popup does not
+ * exist.
+ *
+ * @param name Name of the popup to display
+ */
+function showPopup(name: string): void {
+    const element = document.getElementById(name);
+
+    if (element == null) {
+        return;
+    }
+
+    element.classList.remove("hidden");
+}
+
+/**
+ * Hides the popup with the given name. Does nothing if the popup is not visible or if
+ * the popup does not exist.
+ *
+ * @param name Name of the popup to hide
+ */
+function hidePopup(name: string): void {
+    const element = document.getElementById(name);
+
+    if (element == null) {
+        return;
+    }
+
+    element.classList.add("hidden");
+}
+
 interface Client {
     /**
      * Handles the messages received from the signaling server.
@@ -178,6 +210,7 @@ class Broadcaster implements Client {
                 if (sender.track.kind === "audio") {
                     rtcSendParameters.encodings[0].maxBitrate = 960000; // 960 Kbps, does gek
                 } else if (sender.track.kind === "video") {
+                    // @ts-ignore
                     rtcSendParameters.encodings[0].maxFramerate = 30;
                     rtcSendParameters.encodings[0].maxBitrate = 100000000; // 100 Mbps
                 }
@@ -298,12 +331,7 @@ class Viewer implements Client {
      * @private
      */
     private async handleBroadcasterDisconnect(): Promise<void> {
-        const popup = document.createElement("div");
-
-        popup.id = "popup";
-        popup.innerText = "The broadcaster has disconnected"
-
-        document.body.prepend(popup);
+        showPopup("broadcaster-disconnected");
         document.body.removeChild(this.videoElement);
     }
 
@@ -482,13 +510,7 @@ class Room {
      * @private
      */
     private async getDisplayMediaStream(): Promise<MediaStream> {
-        const popup = document.createElement("div");
-
-        popup.id = "popup";
-        popup.style.cursor = "pointer";
-        popup.innerText = "Click anywhere to share your screen"
-
-        document.body.prepend(popup);
+        showPopup("click-to-share");
 
         await wait(document, "click");
 
@@ -513,13 +535,13 @@ class Room {
 
         // If the promise is resolved, remove the popup from the screen
         displayMedia.then(() => {
-            document.body.removeChild(popup);
+            hidePopup("click-to-share");
         });
 
-        // If the promise is rejected, leave the popup and tell the user about the failure
+        // If the promise is rejected, tell the user about the failure
         displayMedia.catch(() => {
-            popup.innerText = "You denied access to your screen";
-            popup.style.cursor = "inherit";
+            hidePopup("click-to-share");
+            showPopup("access-denied");
         });
 
         return displayMedia;

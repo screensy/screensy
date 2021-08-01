@@ -7,11 +7,14 @@
 		<meta name="application-name" content="screensy" />
 		<meta name="language" content="en" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link href="./styles.css" rel="stylesheet" />
+		<link href="../styles.css" rel="stylesheet" />
 		<script type="text/javascript" src="./screensy.js"></script>
 	</head>
 	<body>
-		<noscript id="popup">Please enable JavaScript to use this application</noscript>
+		<noscript class="popup">Please enable JavaScript to use this application</noscript>
+		<div id="broadcaster-disconnected" class="popup hidden">The broadcaster has disconnected</div>
+		<div id="click-to-share" class="popup clickable hidden">Click anywhere to share your screen</div>
+		<div id="access-denied" class="popup hidden">You denied access to your screen</div>
 		<video id="stream" autoplay="autoplay" muted="muted" controls="controls">
 			Your browser does not support the video tag
 		</video>

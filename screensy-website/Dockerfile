@@ -16,7 +16,8 @@ COPY --from=builder /home/node/app/screensy.js ./
 COPY --from=builder /home/node/app/screensy.js.map ./
 COPY --from=builder /home/node/app/screensy.ts ./
 
-COPY index.html ./
+COPY translations/ ./translations
+
 COPY styles.css ./
 COPY main.go ./
 COPY go.mod ./
