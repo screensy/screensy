@@ -7,21 +7,49 @@
 		<meta name="application-name" content="screensy" />
 		<meta name="language" content="en" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link href="../styles.css" rel="stylesheet" />
+		<link href="./styles.css" rel="stylesheet" />
 		<script type="text/javascript" src="./screensy.js"></script>
 	</head>
 	<body>
-		<noscript class="popup">Please enable JavaScript to use this application</noscript>
-		<div id="broadcaster-disconnected" class="popup hidden">The broadcaster has disconnected</div>
-		<div id="click-to-share" class="popup clickable hidden">Click anywhere to share your screen</div>
-		<div id="access-denied" class="popup hidden">You denied access to your screen</div>
-		<div id="screensharing-not-supported" class="popup hidden">Screensharing is not supported on your device</div>
-		<div id="websockets-not-supported" class="popup hidden">WebSockets is not supported on your device</div>
-		<div id="webrtc-not-supported" class="popup hidden">WebRTC is not supported on your device</div>
-		<div id="mediastream-not-supported" class="popup hidden">The Media Capture and Streams API is not supported on your device</div>
-		<div id="websocket-connect-failed" class="popup hidden">Can't establish a connection to the WebSocket server</div>
+		<noscript class="popup">
+			<h1>JavaScript is not supported or not enabled.</h1>
+			<p>Screensy needs JavaScript support, but your browser does not provide it. Use a browser that supports JavaScript and make sure it is enabled.</p>
+		</noscript>
+		<div id="access-denied" class="popup hidden">
+			<h1>You denied access to your screen.</h1>
+			<p>Screensy needs access to your screen in order to share it, but you denied access. Try reloading this webpage and provide access when your browser asks you for it. If your browser does not ask you for access, check your browser settings.</p>
+		</div>
+		<div id="screensharing-not-supported" class="popup hidden">
+			<h1>Screensharing is not supported or not enabled.</h1>
+			<p>Screensy cannot share your screen, because your browser does not support it, or it is not enabled. Use a browser that supports screensharing and make sure it is enabled.</p>
+		</div>
+		<div id="websockets-not-supported" class="popup hidden">
+			<h1>WebSocket is not supported or not enabled.</h1>
+			<p>Screensy needs WebSocket support, but your browser does not provide it. Use a browser that supports WebSocket and make sure it is enabled.</p>
+		</div>
+		<div id="webrtc-not-supported" class="popup hidden">
+			<h1>WebRTC is not supported or not enabled.</h1>
+			<p>Screensy needs WebRTC support, but your browser does not provide it. Use a browser that supports WebRTC and make sure it is enabled.</p>
+		</div>
+		<div id="mediastream-not-supported" class="popup hidden">
+			<h1>MediaStream is not supported or not enabled.</h1>
+			<p>Screensy needs MediaStream support, but your browser does not provide it. Use a browser that supports MediaStream and make sure it is enabled.</p>
+		</div>
+		<div id="websocket-connect-failed" class="popup hidden">
+			<h1>Could not establish a WebSocket connection.</h1>
+			<p>Screensy needs to establish a WebSocket connection to connect to other users, but it was not able to. Try using a different device or contact the administrator of this website.</p>
+		</div>
+		<div id="broadcaster-disconnected" class="popup hidden">
+			<h1>The broadcaster has disconnected.</h1>
+		</div>
+		<div id="click-to-share" class="popup clickable hidden">
+			<h1>Click anywhere to share your screen.</h1>
+		</div>
 		<video id="stream" autoplay="autoplay" muted="muted" controls="controls">
-			Your browser does not support the video tag
+			<div class="popup">
+				<h1>Video tags are not supported.</h1>
+				<p>Screensy needs video tag support, but your browser does not provide it. Use a browser that supports video tags.</p>
+			</div>
 		</video>
 	</body>
 </html>

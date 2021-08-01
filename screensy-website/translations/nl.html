@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="nl">
+	<head>
+		<meta charset="UTF-8" />
+		<title>screensy</title>
+		<meta name="description" content="Eenvoudig en peer-to-peer je scherm delen" />
+		<meta name="application-name" content="screensy" />
+		<meta name="language" content="nl" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link href="./styles.css" rel="stylesheet" />
+		<script type="text/javascript" src="./screensy.js"></script>
+	</head>
+	<body>
+		<noscript class="popup">
+			<h1>JavaScript wordt niet ondersteund of is niet ingeschakeld.</h1>
+			<p>Screensy heeft JavaScript-ondersteuning nodig, maar je browser biedt dit niet. Gebruik een browser die JavaScript ondersteunt en zorg ervoor dat het ingeschakeld is.</p>
+		</noscript>
+		<div id="access-denied" class="popup hidden">
+			<h1>Je hebt geen toegang tot je scherm verleend.</h1>
+			<p>Screensy heeft toegang nodig tot je scherm om het te kunnen delen, maar je hebt de toegang geweigerd. Probeer deze webpagina te herladen en verschaf toegang wanneer je browser daarnaar vraagt. Indien je browser niet om toegang vraagt, controleer dan je browserinstellingen.</p>
+		</div>
+		<div id="screensharing-not-supported" class="popup hidden">
+			<h1>Schermdelen wordt niet ondersteund of is niet ingeschakeld.</h1>
+			<p>Screensy kan je scherm niet delen, omdat je browser dit niet ondersteunt of het niet is ingeschakeld. Gebruik een browser die schermdelen ondersteunt en zorg ervoor dat het ingeschakeld is.</p>
+		</div>
+		<div id="websockets-not-supported" class="popup hidden">
+			<h1>WebSocket wordt niet ondersteund of is niet ingeschakeld.</h1>
+			<p>Screensy heeft WebSocket-ondersteuning nodig, maar je browser biedt dit niet. Gebruik een browser die WebSocket ondersteunt en zorg ervoor dat het ingeschakeld is.</p>
+		</div>
+		<div id="webrtc-not-supported" class="popup hidden">
+			<h1>WebRTC wordt niet ondersteund of is niet ingeschakeld.</h1>
+			<p>Screensy heeft WebRTC-ondersteuning nodig, maar je browser biedt dit niet. Gebruik een browser die WebRTC ondersteunt en zorg ervoor dat het ingeschakeld is.</p>
+		</div>
+		<div id="mediastream-not-supported" class="popup hidden">
+			<h1>MediaStream wordt niet ondersteund of is niet ingeschakeld.</h1>
+			<p>Screensy heeft MediaStream-ondersteuning nodig, maar je browser biedt dit niet. Gebruik een browser die MediaStream ondersteunt en zorg ervoor dat het ingeschakeld is.</p>
+		</div>
+		<div id="websocket-connect-failed" class="popup hidden">
+			<h1>Kan geen WebSocket-verbinding tot stand brengen.</h1>
+			<p>Screensy moet een WebSocket-verbinding tot stand brengen om met andere gebruikers te kunnen verbinden, maar dit lukte niet. Probeer het op een ander apparaat of neem contact op met de administrator van deze website.</p>
+		</div>
+		<div id="broadcaster-disconnected" class="popup hidden">
+			<h1>De zender heeft de verbinding verbroken.</h1>
+		</div>
+		<div id="click-to-share" class="popup clickable hidden">
+			<h1>Klik ergens om je scherm te delen.</h1>
+		</div>
+		<video id="stream" autoplay="autoplay" muted="muted" controls="controls">
+			<div class="popup">
+				<h1>Video-elementen worden niet ondersteund.</h1>
+				<p>Screensy heeft video-element-ondersteuning nodig, maar je browser biedt dit niet. Gebruik een browser die video-element ondersteunt.</p>
+			</div>
+		</video>
+	</body>
+</html>

@@ -30,10 +30,20 @@ html, body {
     flex-direction: column;
     justify-content: center;
     color: white;
-    text-align: center;
-    font-size: 2em;
-    font-family: "Verdana", sans-serif;
+    font-family: system-ui, sans-serif;
     user-select: none;
+    max-width: 40em;
+    margin: 0 auto;
+    padding: 0 30px;
+    box-sizing: border-box;
+}
+
+.popup h1 {
+    font-size: 1.5em;
+}
+
+.popup p {
+    color: #e1e1e1;
 }
 
 .hidden {
@@ -42,4 +52,14 @@ html, body {
 
 .clickable {
     cursor: pointer;
+}
+
+@media screen and (min-width:800px) {
+    .popup h1 {
+        text-align: center;
+    }
+
+    .popup p {
+        text-align: justify;
+    }
 }
