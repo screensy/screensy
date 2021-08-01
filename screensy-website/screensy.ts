@@ -418,6 +418,8 @@ class Room {
         const webSocketUrl = webSocketProtocol + "://" + location.host + location.pathname;
 
         this.webSocket = new WebSocket(webSocketUrl);
+        this.webSocket.onerror = () => showPopup("websocket-connect-failed");
+
         this.sendMessage = async (message: Message) => this.webSocket.send(JSON.stringify(message));
         this.rtcConfig = {
             iceServers: [
@@ -445,6 +447,12 @@ class Room {
         this.webSocket.onmessage = async (event: MessageEvent) => {
             const messageData = JSON.parse(event.data);
             const isBroadcaster = messageData.type === "broadcast";
+
+            if (isBroadcaster && !("getDisplayMedia" in navigator.mediaDevices)) {
+                showPopup("screensharing-not-supported");
+                return;
+            }
+
             const client = isBroadcaster ?
                 await this.setupBroadcaster() :
                 await this.setupViewer();
@@ -618,6 +626,21 @@ async function main(_event: Event) {
     window.onhashchange = (_event: HashChangeEvent) => {
         location.reload();
     };
+
+    if (!("WebSocket" in window)) {
+        showPopup("websockets-not-supported");
+        return;
+    }
+
+    if (!("mediaDevices" in navigator)) {
+        showPopup("mediastream-not-supported");
+        return;
+    }
+
+    if (!("RTCPeerConnection" in window)) {
+        showPopup("webrtc-not-supported");
+        return;
+    }
 
     const room = new Room(window.location.hash.substring(1));
     await room.join();
