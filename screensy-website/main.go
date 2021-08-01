@@ -12,32 +12,24 @@ import (
 	"time"
 )
 
+var state = globalState{}
 type globalState struct {
-	fileNames    []string
 	fileCache    [][]byte
-	languageTags []language.Tag
 	matcher      language.Matcher
 }
 
-var state = globalState{}
-
 func main() {
-	state.fileNames, state.fileCache, state.languageTags, state.matcher = fetchTranslations()
-
-	log.Printf("Registered the following %d translation files:", len(state.fileNames))
-	for idx, fileName := range state.fileNames {
-		log.Printf("%3d. %s\n", idx, fileName)
-	}
-
 	// Run the webserver on the default HTTP port 80
 	const port = 80
 
 	// This webserver only deals with very small requests; 5 seconds should be plenty
 	const timeout = 5 * time.Second
 
+	state.fileCache, state.matcher = fetchTranslations()
+
 	server := http.Server {
 		Addr: fmt.Sprintf(":%d", port),
-		Handler: http.HandlerFunc(server(http.FileServer(http.Dir(".")))),
+		Handler: http.HandlerFunc(getServer(http.FileServer(http.Dir(".")))),
 		ReadTimeout: timeout,
 		WriteTimeout: timeout,
 		IdleTimeout: timeout,
@@ -48,39 +40,41 @@ func main() {
 	log.Fatal(err)
 }
 
-func fetchTranslations() ([]string, [][]byte, []language.Tag, language.Matcher) {
+func fetchTranslations() ([][]byte, language.Matcher) {
 	filePaths, err := filepath.Glob("./translations/*.html")
 
 	if err == filepath.ErrBadPattern {
 		panic("Invalid pattern during fetchTranslations")
 	}
 
-	numTranslations := len(filePaths)
+	log.Printf("Registering the following %d translation files:", len(filePaths))
+	for idx, filePath := range filePaths {
+		log.Printf("%3d. %s\n", idx + 1, filePath)
+	}
 
+	// Prepend "translations/en.html", because it serves as the ultimate fallback
+	filePaths = append([]string{"translations/en.html"}, filePaths...)
+
+	numTranslations := len(filePaths)
 	fileNames := make([]string, numTranslations, numTranslations)
 	fileCache := make([][]byte, numTranslations, numTranslations)
 	languageTags := make([]language.Tag, numTranslations, numTranslations)
 
 	for idx, filePath := range filePaths {
 		fileNames[idx] = filepath.Base(filePath)
-		fileContent, err := ioutil.ReadFile(filePath)
+		fileCache[idx], err = ioutil.ReadFile(filePath)
 
 		if err != nil {
 			panic("Could not read localisation file " + filePath)
 		}
 
-		fileCache[idx] = fileContent
-
-		languageCode := strings.TrimSuffix(fileNames[idx], filepath.Ext(fileNames[idx]))
-		languageTags[idx] = language.MustParse(languageCode)
+		languageTags[idx] = language.MustParse(strings.TrimSuffix(fileNames[idx], filepath.Ext(fileNames[idx])))
 	}
 
-	matcher := language.NewMatcher(languageTags)
-
-	return fileNames, fileCache, languageTags, matcher
+	return fileCache, language.NewMatcher(languageTags)
 }
 
-func server(fileServer http.Handler) func(writer http.ResponseWriter, request *http.Request) {
+func getServer(fileServer http.Handler) func(writer http.ResponseWriter, request *http.Request) {
 	return func(writer http.ResponseWriter, request *http.Request) {
 		if request.URL.Path == "/" || request.URL.Path == "/index.html" {
 			acceptLanguageHeader := request.Header.Get("Accept-Language")
