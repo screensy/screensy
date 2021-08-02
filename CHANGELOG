@@ -10,9 +10,19 @@ Semantic Versioning [1].
 UNRELEASED
 ----------
 
+Added:
+- Add localisation based on the browser settings (through the Accept-Language
+  header).
+- Add the Dutch translation.
+
 Changed:
 - In the client, the stream is no longer locked to full-screen on mobile
   devices.
+- In the client, more detailed error messages are shown when something goes
+  wrong.
+
+Fixed:
+- Fixed compilation failure for TypeScript version greater than 4.3.2.
 
 Security:
 - Update the dependency 'ws' of the rendezvous server. The old version had a
