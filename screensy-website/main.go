@@ -40,18 +40,21 @@ func main() {
 }
 
 func fetchTranslations() ([][]byte, language.Matcher) {
+	// Get the filepaths of all translations
 	filePaths, err := filepath.Glob("./translations/*.html")
 
 	if err == filepath.ErrBadPattern {
 		panic("Invalid pattern during fetchTranslations")
 	}
 
+	// Print a list of all found translation filepaths
 	log.Printf("Registering the following %d translation files:", len(filePaths))
 	for idx, filePath := range filePaths {
 		log.Printf("%3d. %s\n", idx + 1, filePath)
 	}
 
-	// Prepend "translations/en.html", because it serves as the ultimate fallback
+	// Prepend "translations/en.html" to the filepaths, because it serves as
+	// the ultimate fallback
 	filePaths = append([]string{"translations/en.html"}, filePaths...)
 
 	numTranslations := len(filePaths)
@@ -60,14 +63,21 @@ func fetchTranslations() ([][]byte, language.Matcher) {
 	languageTags := make([]language.Tag, numTranslations, numTranslations)
 
 	for idx, filePath := range filePaths {
-		fileNames[idx] = filepath.Base(filePath)
-		fileCache[idx], err = ioutil.ReadFile(filePath)
 
+		// Get the filename (with extension)
+		fileNames[idx] = filepath.Base(filePath)
+
+		// Read the content of the file into the cache
+		fileCache[idx], err = ioutil.ReadFile(filePath)
 		if err != nil {
 			panic("Could not read localisation file " + filePath)
 		}
 
-		languageTags[idx] = language.MustParse(strings.TrimSuffix(fileNames[idx], filepath.Ext(fileNames[idx])))
+		// Get the basename (file name without extension)
+		baseName := strings.TrimSuffix(fileNames[idx], filepath.Ext(fileNames[idx]))
+
+		// Parse the basename as a language tag
+		languageTags[idx] = language.MustParse(baseName)
 	}
 
 	return fileCache, language.NewMatcher(languageTags)
