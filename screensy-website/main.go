@@ -3,19 +3,21 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"golang.org/x/text/language"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"golang.org/x/text/language"
 )
 
 var state = globalState{}
+
 type globalState struct {
-	fileCache    [][]byte
-	matcher      language.Matcher
+	fileCache [][]byte
+	matcher   language.Matcher
 }
 
 func main() {
@@ -26,12 +28,12 @@ func main() {
 
 	state.fileCache, state.matcher = fetchTranslations()
 
-	server := http.Server {
-		Addr: fmt.Sprintf(":%d", port),
-		Handler: http.HandlerFunc(getServer(http.FileServer(http.Dir(".")))),
-		ReadTimeout: timeout,
+	server := http.Server{
+		Addr:         fmt.Sprintf(":%d", port),
+		Handler:      http.HandlerFunc(getServer(http.FileServer(http.Dir(".")))),
+		ReadTimeout:  timeout,
 		WriteTimeout: timeout,
-		IdleTimeout: timeout,
+		IdleTimeout:  timeout,
 	}
 
 	log.Printf("Server started on port %d", port)
@@ -50,7 +52,7 @@ func fetchTranslations() ([][]byte, language.Matcher) {
 	// Print a list of all found translation filepaths
 	log.Printf("Registering the following %d translation files:", len(filePaths))
 	for idx, filePath := range filePaths {
-		log.Printf("%3d. %s\n", idx + 1, filePath)
+		log.Printf("%3d. %s\n", idx+1, filePath)
 	}
 
 	// Prepend "translations/en.html" to the filepaths, because it serves as
