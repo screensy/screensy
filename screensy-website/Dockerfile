@@ -22,6 +22,7 @@ COPY styles.css ./
 COPY main.go ./
 COPY go.mod ./
 
-RUN go get ./...
+# Install the dependencies for the project
+RUN go get .
 
 CMD ["go", "run", "main.go"]

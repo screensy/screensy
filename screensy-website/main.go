@@ -19,8 +19,7 @@ type globalState struct {
 }
 
 func main() {
-	// Run the webserver on the default HTTP port 80
-	const port = 80
+	const port = 8080
 
 	// This webserver only deals with very small requests; 5 seconds should be plenty
 	const timeout = 5 * time.Second

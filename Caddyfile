@@ -1,5 +1,5 @@
 localhost {
-	reverse_proxy website:80
+	reverse_proxy website:8080
 
 	@rendezvous {
 		header Connection *Upgrade*
