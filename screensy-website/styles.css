@@ -32,7 +32,6 @@ html, body {
     color: white;
     font-family: system-ui, sans-serif;
     user-select: none;
-    max-width: 40em;
     max-width: 65ch;
     margin: 0 auto;
     padding: 0 30px;
