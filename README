@@ -114,7 +114,7 @@ SERVER SETUP (WITHOUT DOCKER)
     with the username "screensy" and the password "screensy". We use the
     following "turnserver.conf" for this:
 
-     external-ip=localhost
+     external-ip=example.com
      listening-port=3478
      user=screensy:screensy
      lt-cred-mech
