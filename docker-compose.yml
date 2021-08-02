@@ -12,8 +12,8 @@ services:
                 volumes:
                         - ./Caddyfile:/etc/caddy/Caddyfile
                 ports:
-                        - 443:443
-                        - 80:80
+                        - "443:443"
+                        - "80:80"
         turn:
                 image: "coturn/coturn:4.5.2"
                 restart: unless-stopped
