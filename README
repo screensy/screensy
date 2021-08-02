@@ -73,8 +73,7 @@ SERVER SETUP (WITHOUT DOCKER)
      - NodeJS
      - A TypeScript compiler
      - A Go compiler
-     - A static file server (we recommend Caddy)
-     - A reverse proxy that supports WebSocket (again, we recommend Caddy)
+     - A reverse proxy that supports WebSocket (we recommend Caddy)
      - A STUN server (we recommend Coturn)
      - A TURN server (again, we recommend Coturn)
 
