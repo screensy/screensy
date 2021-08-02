@@ -33,6 +33,7 @@ html, body {
     font-family: system-ui, sans-serif;
     user-select: none;
     max-width: 40em;
+    max-width: 65ch;
     margin: 0 auto;
     padding: 0 30px;
     box-sizing: border-box;
@@ -44,6 +45,7 @@ html, body {
 
 .popup p {
     color: #e1e1e1;
+    line-height: 1.3;
 }
 
 .hidden {
