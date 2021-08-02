@@ -68,82 +68,82 @@ SERVER SETUP (WITH DOCKER)
 SERVER SETUP (WITHOUT DOCKER)
 -----------------------------
 
-1. Make sure you have the following software installed on your server:
+1.  Make sure you have the following software installed on your server:
 
-    - NodeJS
-    - A TypeScript compiler
-    - A static file server (we recommend Caddy)
-    - A reverse proxy that supports WebSocket (again, we recommend Caddy)
-    - A STUN server (we recommend Coturn)
-    - A TURN server (again, we recommend Coturn)
+     - NodeJS
+     - A TypeScript compiler
+     - A Go compiler
+     - A static file server (we recommend Caddy)
+     - A reverse proxy that supports WebSocket (again, we recommend Caddy)
+     - A STUN server (we recommend Coturn)
+     - A TURN server (again, we recommend Coturn)
 
-2. Clone this repository and navigate to it, using the following commands:
+2.  Clone this repository and navigate to it, using the following commands:
 
-    git clone https://github.com/screensy/screensy.git
-    cd screensy/
+     git clone https://github.com/screensy/screensy.git
+     cd screensy/
 
-3. Install the required development dependencies for the rendezvous server,
-   using the following command:
+3.  Install the required development dependencies for the rendezvous server,
+    using the following command:
 
-    cd screensy-rendezvous && npm install --only=development && cd ..
+     cd screensy-rendezvous && npm install --only=development && cd ..
 
-4. Compile the TypeScript files in both the "screensy-rendezvous" as well as
-   the "screensy-website" directory, using the following commands:
+4.  Compile the TypeScript files in both the "screensy-rendezvous" as well as
+    the "screensy-website" directory, using the following commands:
 
-    cd screensy-rendezvous && tsc && cd ..
-    cd screensy-website && tsc && cd ..
+     cd screensy-rendezvous && tsc && cd ..
+     cd screensy-website && tsc && cd ..
 
-5. Make sure the required ports are accessible. We listed these ports at the
-   bottom of this document. 
+5.  Install the required dependencies for the webserver, using the following
+    command:
 
-6. Set up the static file server to serve the files in the "screensy-website"
-   directory. Do not use the standard port "80" for this, as it will conflict
-   with the reverse proxy we will set up in step 9.
+     cd screensy-website && go get . && cd ..
 
-   We use the following Caddyfile for this:
+6.  Make sure the required ports are accessible. We listed these ports at the
+    bottom of this document.
 
-    {
-            admin off
-    }
+7.  Start the webserver using the following command:
 
-    http://localhost:8080 {
-            file_server
-    }
+     cd screensy-website && go run main.go
 
-7. Set up the STUN and TURN server. Use the long-term credential mechanism with
-   the username "screensy" and the password "screensy". We use the following
-   "turnserver.conf" for this:
+    This starts the webserver on port 8080. We do not use the standard port
+    "80" for this, as it will conflict with the reverse proxy we will set up in
+    step 10.
 
-    external-ip=localhost
-    listening-port=3478
-    user=screensy:screensy
-    lt-cred-mech
-    realm=screensy
+8.  Set up the STUN and TURN server. Use the long-term credential mechanism
+    with the username "screensy" and the password "screensy". We use the
+    following "turnserver.conf" for this:
 
-8. Start the rendezvous server located in "screensy-rendezvous" directory,
-   using the following commands:
+     external-ip=localhost
+     listening-port=3478
+     user=screensy:screensy
+     lt-cred-mech
+     realm=screensy
 
-    cd screensy-rendezvous
-    npm install --only=production
-    node server.js
+9.  Start the rendezvous server located in "screensy-rendezvous" directory,
+    using the following commands:
 
-   This starts a WebSocket server on port 4000.
+     cd screensy-rendezvous
+     npm install --only=production
+     node server.js
 
-9. Reverse proxy both the static file server and the rendezvous server. We use
-   the following Caddyfile for this:
+    This starts a WebSocket server on port 4000.
 
-    example.com {
-        reverse_proxy localhost:8080
+10. Reverse proxy both the static file server and the rendezvous server. We use
+    the following Caddyfile for this:
 
-        @rendezvous {
-            header Connection *Upgrade*
-            header Upgrade websocket
-        }
+     example.com {
+         reverse_proxy localhost:8080
 
-        reverse_proxy @rendezvous localhost:4000
-    }
+         @rendezvous {
+             header Connection *Upgrade*
+             header Upgrade websocket
+         }
 
-   Keep in mind that most web browsers require HTTPS for WebRTC to work.
+         reverse_proxy @rendezvous localhost:4000
+     }
+
+    Keep in mind that most web browsers require HTTPS for WebRTC to work.
 
 
 PORTS
