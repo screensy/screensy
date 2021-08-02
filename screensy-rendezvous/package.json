@@ -1,23 +1,23 @@
 {
-  "name": "screensy-rendezvous",
-  "description": "The signaling server for screensy",
-  "main": "server.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/screensy/screensy.git"
-  },
-  "contributors": [
-    "Marijn van Wezel",
-    "Stef Gijsberts"
-  ],
-  "license": "GPL-3.0-or-later",
-  "homepage": "https://github.com/screensy/screensy#readme",
-  "devDependencies": {
-    "@types/node": "^14.14.31",
-    "@types/ws": "^7.4.0",
-    "typescript": "^4.2.3"
-  },
-  "dependencies": {
-    "ws": "^7.4.3"
-  }
+    "name": "screensy-rendezvous",
+    "description": "The signaling server for screensy",
+    "main": "server.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/screensy/screensy.git"
+    },
+    "contributors": [
+        "Marijn van Wezel",
+        "Stef Gijsberts"
+    ],
+    "license": "GPL-3.0-or-later",
+    "homepage": "https://github.com/screensy/screensy#readme",
+    "devDependencies": {
+        "@types/node": "^14.14.31",
+        "@types/ws": "^7.4.0",
+        "typescript": "^4.2.3"
+    },
+    "dependencies": {
+        "ws": "^7.4.3"
+    }
 }

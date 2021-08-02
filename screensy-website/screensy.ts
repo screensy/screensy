@@ -52,13 +52,14 @@ interface MessageWebRTCBroadcaster {
     message: any;
 }
 
-type Message = MessageViewer |
-    MessageViewerDisconnected |
-    MessageBroadcasterDisconnected |
-    MessageWebRTCViewer |
-    MessageWebRTCBroadcaster |
-    MessageRequestViewers |
-    MessageJoin;
+type Message =
+    | MessageViewer
+    | MessageViewerDisconnected
+    | MessageBroadcasterDisconnected
+    | MessageWebRTCViewer
+    | MessageWebRTCBroadcaster
+    | MessageRequestViewers
+    | MessageJoin;
 
 interface MessageSender {
     (msg: Message): Promise<void>;
@@ -71,13 +72,15 @@ interface MessageSender {
  */
 function wait(target: EventTarget, listenerName: string): Promise<Event> {
     // Lambda that returns a listener for the given resolve lambda
-    const listener = (resolve: (value: Event | PromiseLike<Event>) => void) => (event: Event) => {
-        target.removeEventListener(listenerName, listener(resolve));
-        resolve(event);
-    };
+    const listener =
+        (resolve: (value: Event | PromiseLike<Event>) => void) =>
+        (event: Event) => {
+            target.removeEventListener(listenerName, listener(resolve));
+            resolve(event);
+        };
 
     return new Promise((resolve, _reject) => {
-        target.addEventListener(listenerName, listener(resolve))
+        target.addEventListener(listenerName, listener(resolve));
     });
 }
 
@@ -143,7 +146,11 @@ class Broadcaster implements Client {
      * @param rtcConfig The WebRTC configuration to use for the WebRTC connection
      * @param mediaStream The MediaStream to broadcast
      */
-    constructor(sendMessage: MessageSender, rtcConfig: RTCConfiguration, mediaStream: MediaStream) {
+    constructor(
+        sendMessage: MessageSender,
+        rtcConfig: RTCConfiguration,
+        mediaStream: MediaStream
+    ) {
         this.sendMessage = sendMessage;
         this.rtcConfig = rtcConfig;
         this.mediaStream = mediaStream;
@@ -152,7 +159,12 @@ class Broadcaster implements Client {
     /**
      * @inheritDoc
      */
-    async handleMessage(msg: MessageViewer | MessageViewerDisconnected | MessageWebRTCBroadcaster): Promise<void> {
+    async handleMessage(
+        msg:
+            | MessageViewer
+            | MessageViewerDisconnected
+            | MessageWebRTCBroadcaster
+    ): Promise<void> {
         switch (msg.type) {
             case "viewer":
                 await this.addViewer(msg.viewerId);
@@ -179,14 +191,16 @@ class Broadcaster implements Client {
             viewerConnection.addTrack(track, this.mediaStream);
         }
 
-        viewerConnection.onicecandidate = (event: RTCPeerConnectionIceEvent) => {
+        viewerConnection.onicecandidate = (
+            event: RTCPeerConnectionIceEvent
+        ) => {
             if (!event.candidate) return;
 
             this.sendMessage({
-                "type": "webrtcbroadcaster",
-                "kind": "candidate",
-                "viewerId": viewerId,
-                "message": event.candidate
+                type: "webrtcbroadcaster",
+                kind: "candidate",
+                viewerId: viewerId,
+                message: event.candidate,
             });
         };
 
@@ -228,10 +242,10 @@ class Broadcaster implements Client {
         }
 
         await this.sendMessage({
-            "type": "webrtcbroadcaster",
-            "kind": "offer",
-            "viewerId": viewerId,
-            "message": localDescription
+            type: "webrtcbroadcaster",
+            kind: "offer",
+            viewerId: viewerId,
+            message: localDescription,
         });
 
         this.viewers[viewerId] = viewerConnection;
@@ -266,7 +280,9 @@ class Broadcaster implements Client {
      * @param msg
      * @private
      */
-    private async handleWebRTCMessage(msg: MessageWebRTCBroadcaster): Promise<void> {
+    private async handleWebRTCMessage(
+        msg: MessageWebRTCBroadcaster
+    ): Promise<void> {
         const kind = msg.kind;
 
         switch (kind) {
@@ -275,14 +291,18 @@ class Broadcaster implements Client {
                     break;
                 }
 
-                await this.viewers[msg.viewerId].addIceCandidate(new RTCIceCandidate(msg.message));
+                await this.viewers[msg.viewerId].addIceCandidate(
+                    new RTCIceCandidate(msg.message)
+                );
                 break;
             case "answer":
                 if (this.viewers[msg.viewerId] == null) {
                     break;
                 }
 
-                await this.viewers[msg.viewerId].setRemoteDescription(msg.message);
+                await this.viewers[msg.viewerId].setRemoteDescription(
+                    msg.message
+                );
                 break;
         }
     }
@@ -305,7 +325,11 @@ class Viewer implements Client {
      * @param rtcConfig The WebRTC configuration to use for the WebRTC connection
      * @param videoElement The element to project the received MediaStream onto
      */
-    constructor(sendMessage: MessageSender, rtcConfig: RTCConfiguration, videoElement: HTMLVideoElement) {
+    constructor(
+        sendMessage: MessageSender,
+        rtcConfig: RTCConfiguration,
+        videoElement: HTMLVideoElement
+    ) {
         this.sendMessage = sendMessage;
         this.rtcConfig = rtcConfig;
         this.videoElement = videoElement;
@@ -314,7 +338,9 @@ class Viewer implements Client {
     /**
      * @inheritDoc
      */
-    async handleMessage(msg: MessageBroadcasterDisconnected | MessageWebRTCViewer): Promise<void> {
+    async handleMessage(
+        msg: MessageBroadcasterDisconnected | MessageWebRTCViewer
+    ): Promise<void> {
         switch (msg.type) {
             case "broadcasterdisconnected":
                 await this.handleBroadcasterDisconnect();
@@ -350,7 +376,9 @@ class Viewer implements Client {
                     break;
                 }
 
-                await this.broadcasterPeerConnection.addIceCandidate(new RTCIceCandidate(msg.message));
+                await this.broadcasterPeerConnection.addIceCandidate(
+                    new RTCIceCandidate(msg.message)
+                );
                 break;
             case "offer":
                 await this.handleOffer(msg);
@@ -371,13 +399,15 @@ class Viewer implements Client {
             this.videoElement.srcObject = event.streams[0];
         };
 
-        this.broadcasterPeerConnection.onicecandidate = (event: RTCPeerConnectionIceEvent) => {
+        this.broadcasterPeerConnection.onicecandidate = (
+            event: RTCPeerConnectionIceEvent
+        ) => {
             if (event.candidate == null) return;
 
             this.sendMessage({
-                "type": "webrtcviewer",
-                "kind": "candidate",
-                "message": event.candidate
+                type: "webrtcviewer",
+                kind: "candidate",
+                message: event.candidate,
             });
         };
 
@@ -391,9 +421,9 @@ class Viewer implements Client {
         }
 
         await this.sendMessage({
-            "type": "webrtcviewer",
-            "kind": "answer",
-            "message": this.broadcasterPeerConnection.localDescription
+            type: "webrtcviewer",
+            kind: "answer",
+            message: this.broadcasterPeerConnection.localDescription,
         });
     }
 }
@@ -414,23 +444,26 @@ class Room {
         this.roomId = roomId;
         this.videoElement = <HTMLVideoElement>document.getElementById("stream");
 
-        const webSocketProtocol = window.location.protocol === "http" ? "ws" : "wss";
-        const webSocketUrl = webSocketProtocol + "://" + location.host + location.pathname;
+        const webSocketProtocol =
+            window.location.protocol === "http" ? "ws" : "wss";
+        const webSocketUrl =
+            webSocketProtocol + "://" + location.host + location.pathname;
 
         this.webSocket = new WebSocket(webSocketUrl);
         this.webSocket.onerror = () => showPopup("websocket-connect-failed");
 
-        this.sendMessage = async (message: Message) => this.webSocket.send(JSON.stringify(message));
+        this.sendMessage = async (message: Message) =>
+            this.webSocket.send(JSON.stringify(message));
         this.rtcConfig = {
             iceServers: [
-                {"urls": "stun:" + location.hostname},
+                { urls: "stun:" + location.hostname },
                 {
-                    "urls": "turn:" + location.hostname,
-                    "username": "screensy",
-                    "credential": "screensy",
-                }
+                    urls: "turn:" + location.hostname,
+                    username: "screensy",
+                    credential: "screensy",
+                },
             ],
-            iceCandidatePoolSize: 8
+            iceCandidatePoolSize: 8,
         };
 
         this.videoElement.onpause = (_event: Event) => this.videoElement.play();
@@ -448,25 +481,32 @@ class Room {
             const messageData = JSON.parse(event.data);
             const isBroadcaster = messageData.type === "broadcast";
 
-            if (isBroadcaster && !("getDisplayMedia" in navigator.mediaDevices)) {
+            if (
+                isBroadcaster &&
+                !("getDisplayMedia" in navigator.mediaDevices)
+            ) {
                 showPopup("screensharing-not-supported");
                 return;
             }
 
-            const client = isBroadcaster ?
-                await this.setupBroadcaster() :
-                await this.setupViewer();
+            const client = isBroadcaster
+                ? await this.setupBroadcaster()
+                : await this.setupViewer();
 
-            this.webSocket.onmessage = (event: MessageEvent) => client.handleMessage(JSON.parse(event.data));
+            this.webSocket.onmessage = (event: MessageEvent) =>
+                client.handleMessage(JSON.parse(event.data));
 
             if (isBroadcaster) {
-                await this.sendMessage({"type": "requestviewers"});
+                await this.sendMessage({ type: "requestviewers" });
             }
 
             this.setDocumentTitle();
         };
 
-        await this.sendMessage({"type": "join", "roomId": this.roomId.toLowerCase()});
+        await this.sendMessage({
+            type: "join",
+            roomId: this.roomId.toLowerCase(),
+        });
     }
 
     /**
@@ -482,8 +522,13 @@ class Room {
      */
     private async setupBroadcaster(): Promise<Broadcaster> {
         const mediaStream = await this.getDisplayMediaStream();
-        const broadcaster = new Broadcaster(this.sendMessage, this.rtcConfig, mediaStream);
-        const counterElement: HTMLParagraphElement = document.createElement("p");
+        const broadcaster = new Broadcaster(
+            this.sendMessage,
+            this.rtcConfig,
+            mediaStream
+        );
+        const counterElement: HTMLParagraphElement =
+            document.createElement("p");
 
         counterElement.id = "counter";
         counterElement.innerText = "0";
@@ -491,12 +536,12 @@ class Room {
         broadcaster.onviewerjoin = (_viewerId: string) => {
             const currentCounter = parseInt(counterElement.innerText);
             counterElement.innerText = (currentCounter + 1).toString();
-        }
+        };
 
         broadcaster.onviewerleave = (_viewerId: string) => {
             const currentCounter = parseInt(counterElement.innerText);
             counterElement.innerText = (currentCounter - 1).toString();
-        }
+        };
 
         document.body.prepend(counterElement);
         this.videoElement.srcObject = mediaStream;
@@ -524,16 +569,16 @@ class Room {
 
         const videoConstraints: MediaTrackConstraints | boolean = true;
         const audioConstraints: MediaTrackConstraints | boolean = {
-            "channelCount": {"ideal": 2},
-            "sampleRate": {"ideal": 192000},
-            "noiseSuppression": {"ideal": false},
-            "echoCancellation": {"ideal": false},
-            "autoGainControl": {"ideal": false}
+            channelCount: { ideal: 2 },
+            sampleRate: { ideal: 192000 },
+            noiseSuppression: { ideal: false },
+            echoCancellation: { ideal: false },
+            autoGainControl: { ideal: false },
         };
 
         const mediaConstraints: MediaStreamConstraints = {
             video: videoConstraints,
-            audio: audioConstraints
+            audio: audioConstraints,
         };
 
         const mediaDevices: MediaDevices = window.navigator.mediaDevices;
@@ -563,41 +608,170 @@ class Room {
  */
 function generateRoomName(): string {
     const adjectives = [
-        "large", "small", "beautiful", "heavenly", "red", "yellow", "green",
-        "orange", "purple", "massive", "tasty", "cheap", "fancy", "expensive",
-        "crazy", "round", "triangular", "powered", "blue", "heavy", "square",
-        "rectangular", "lit", "authentic", "broken", "busy", "original",
-        "special", "thick", "thin", "pleasant", "sharp", "steady", "happy",
-        "delighted", "stunning"
+        "large",
+        "small",
+        "beautiful",
+        "heavenly",
+        "red",
+        "yellow",
+        "green",
+        "orange",
+        "purple",
+        "massive",
+        "tasty",
+        "cheap",
+        "fancy",
+        "expensive",
+        "crazy",
+        "round",
+        "triangular",
+        "powered",
+        "blue",
+        "heavy",
+        "square",
+        "rectangular",
+        "lit",
+        "authentic",
+        "broken",
+        "busy",
+        "original",
+        "special",
+        "thick",
+        "thin",
+        "pleasant",
+        "sharp",
+        "steady",
+        "happy",
+        "delighted",
+        "stunning",
     ];
 
     const pluralNouns = [
-        "monsters", "people", "cars", "buttons", "vegetables", "students",
-        "computers", "robots", "lamps", "doors", "wizards", "books", "shirts",
-        "pens", "guitars", "bottles", "microphones", "pants", "drums", "plants",
-        "batteries", "barrels", "birds", "coins", "clothes", "deals", "crosses",
-        "devices", "desktops", "diamonds", "fireworks", "funds", "guitars",
-        "pianos", "harmonies", "levels", "mayors", "mechanics", "networks",
-        "ponds", "trees", "proofs", "flowers", "houses", "speakers", "phones",
-        "chargers"
+        "monsters",
+        "people",
+        "cars",
+        "buttons",
+        "vegetables",
+        "students",
+        "computers",
+        "robots",
+        "lamps",
+        "doors",
+        "wizards",
+        "books",
+        "shirts",
+        "pens",
+        "guitars",
+        "bottles",
+        "microphones",
+        "pants",
+        "drums",
+        "plants",
+        "batteries",
+        "barrels",
+        "birds",
+        "coins",
+        "clothes",
+        "deals",
+        "crosses",
+        "devices",
+        "desktops",
+        "diamonds",
+        "fireworks",
+        "funds",
+        "guitars",
+        "pianos",
+        "harmonies",
+        "levels",
+        "mayors",
+        "mechanics",
+        "networks",
+        "ponds",
+        "trees",
+        "proofs",
+        "flowers",
+        "houses",
+        "speakers",
+        "phones",
+        "chargers",
     ];
 
     const verbs = [
-        "break", "roll", "flip", "grow", "bake", "create", "cook", "smack",
-        "drink", "close", "display", "run", "move", "flop", "wrap", "enter",
-        "dig", "fly", "swim", "draw", "celebrate", "communicate", "encompass",
-        "forgive", "negotiate", "pioneer", "photograph", "play", "scratch",
-        "stabilize", "weigh", "wrap", "yield", "return", "update", "understand",
-        "propose", "succeed", "stretch", "submit"
+        "break",
+        "roll",
+        "flip",
+        "grow",
+        "bake",
+        "create",
+        "cook",
+        "smack",
+        "drink",
+        "close",
+        "display",
+        "run",
+        "move",
+        "flop",
+        "wrap",
+        "enter",
+        "dig",
+        "fly",
+        "swim",
+        "draw",
+        "celebrate",
+        "communicate",
+        "encompass",
+        "forgive",
+        "negotiate",
+        "pioneer",
+        "photograph",
+        "play",
+        "scratch",
+        "stabilize",
+        "weigh",
+        "wrap",
+        "yield",
+        "return",
+        "update",
+        "understand",
+        "propose",
+        "succeed",
+        "stretch",
+        "submit",
     ];
 
     const adverbs = [
-        "gingerly", "thoroughly", "heavily", "crazily", "mostly", "fast",
-        "slowly", "merrily", "quickly", "heavenly", "cheerfully", "honestly",
-        "politely", "bravely", "vivaciously", "fortunately", "innocently",
-        "kindly", "eagerly", "elegantly", "vividly", "reasonably", "rudely",
-        "wisely", "thankfully", "wholly", "adorably", "happily", "firmly",
-        "fast", "simply", "wickedly"
+        "gingerly",
+        "thoroughly",
+        "heavily",
+        "crazily",
+        "mostly",
+        "fast",
+        "slowly",
+        "merrily",
+        "quickly",
+        "heavenly",
+        "cheerfully",
+        "honestly",
+        "politely",
+        "bravely",
+        "vivaciously",
+        "fortunately",
+        "innocently",
+        "kindly",
+        "eagerly",
+        "elegantly",
+        "vividly",
+        "reasonably",
+        "rudely",
+        "wisely",
+        "thankfully",
+        "wholly",
+        "adorably",
+        "happily",
+        "firmly",
+        "fast",
+        "simply",
+        "wickedly",
     ];
 
     const idxAdjective = Math.floor(Math.random() * adjectives.length);
@@ -609,11 +783,13 @@ function generateRoomName(): string {
         adjectives[idxAdjective],
         pluralNouns[idxPluralNoun],
         verbs[idxVerb],
-        adverbs[idxAdverb]
+        adverbs[idxAdverb],
     ];
 
     // @see https://flaviocopes.com/how-to-uppercase-first-letter-javascript/
-    return words.map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join("");
+    return words
+        .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join("");
 }
 
 async function main(_event: Event) {

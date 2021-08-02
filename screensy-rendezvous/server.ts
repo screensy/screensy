@@ -60,25 +60,28 @@ interface MessageWebRTCBroadcaster {
  * Tells the broadcaster a viewer has disconnected
  */
 interface MessageViewerDisconnected {
-    type: "viewerdisconnected",
-    viewerId: string
+    type: "viewerdisconnected";
+    viewerId: string;
 }
 
 /**
  * Tells the viewer the broadcaster has disconnected.
  */
 interface MessageBroadcasterDisconnected {
-    type: "broadcasterdisconnected"
+    type: "broadcasterdisconnected";
 }
 
-type FromBroadcasterMessage = MessageJoin | MessageWebRTCBroadcaster | MessageRequestViewers;
+type FromBroadcasterMessage =
+    | MessageJoin
+    | MessageWebRTCBroadcaster
+    | MessageRequestViewers;
 type FromViewerMessage = MessageJoin | MessageWebRTCViewer;
 
 /**
  * The main entry point.
  */
 function main(): void {
-    const socket = new websocket.Server({"port": 4000});
+    const socket = new websocket.Server({ port: 4000 });
     const server = new Server();
 
     socket.on("connection", (socket: WebSocket) => server.onConnection(socket));
@@ -132,8 +135,10 @@ class Server {
      */
     newRoom(roomId: string, broadcaster: WebSocket): void {
         if (this.rooms.has(roomId)) {
-            throw "Attempted to create room with the same ID as an existing room. " +
-            "This likely indicates an error in the server implementation.";
+            throw (
+                "Attempted to create room with the same ID as an existing room. " +
+                "This likely indicates an error in the server implementation."
+            );
         }
 
         this.rooms.set(roomId, new Room(broadcaster));
@@ -168,11 +173,12 @@ class Room {
     constructor(broadcaster: WebSocket) {
         this.broadcaster = broadcaster;
 
-        broadcaster.onmessage = (event: MessageEvent) => this.handleBroadcasterMessage(JSON.parse(event.data));
+        broadcaster.onmessage = (event: MessageEvent) =>
+            this.handleBroadcasterMessage(JSON.parse(event.data));
 
         // Tell the client that he has been assigned the role "broadcaster"
         const message: MessageBroadcast = {
-            "type": "broadcast"
+            type: "broadcast",
         };
 
         broadcaster.send(JSON.stringify(message));
@@ -200,9 +206,9 @@ class Room {
                 }
 
                 const message: MessageWebRTCViewer = {
-                    "type": "webrtcviewer",
-                    "kind": msg.kind,
-                    "message": msg.message
+                    type: "webrtcviewer",
+                    kind: msg.kind,
+                    message: msg.message,
                 };
 
                 viewer.send(JSON.stringify(message));
@@ -212,8 +218,8 @@ class Room {
             case "requestviewers": {
                 for (const viewerId in this.viewers) {
                     const messageViewer: MessageViewer = {
-                        "type": "viewer",
-                        "viewerId": viewerId
+                        type: "viewer",
+                        viewerId: viewerId,
                     };
 
                     this.broadcaster.send(JSON.stringify(messageViewer));
@@ -232,20 +238,22 @@ class Room {
     addViewer(viewer: WebSocket): void {
         const id: string = (this.counter++).toString();
 
-        viewer.onmessage = (event: MessageEvent) => this.handleViewerMessage(id, JSON.parse(event.data));
-        viewer.onclose = (_event: CloseEvent) => this.handleViewerDisconnect(id);
+        viewer.onmessage = (event: MessageEvent) =>
+            this.handleViewerMessage(id, JSON.parse(event.data));
+        viewer.onclose = (_event: CloseEvent) =>
+            this.handleViewerDisconnect(id);
 
         // Tell the client that he has been assigned the role "broadcaster"
         const messageView: MessageView = {
-            "type": "view"
+            type: "view",
         };
 
         viewer.send(JSON.stringify(messageView));
 
         // Tell the broadcaster a viewer has connected
         const messageViewer: MessageViewer = {
-            "type": "viewer",
-            "viewerId": id
+            type: "viewer",
+            viewerId: id,
         };
 
         this.broadcaster.send(JSON.stringify(messageViewer));
@@ -267,10 +275,10 @@ class Room {
         switch (msg.type) {
             case "webrtcviewer": {
                 const message: MessageWebRTCBroadcaster = {
-                    "type": "webrtcbroadcaster",
-                    "kind": msg.kind,
-                    "message": msg.message,
-                    "viewerId": viewerId
+                    type: "webrtcbroadcaster",
+                    kind: msg.kind,
+                    message: msg.message,
+                    viewerId: viewerId,
                 };
 
                 this.broadcaster.send(JSON.stringify(message));
@@ -287,16 +295,18 @@ class Room {
      */
     handleViewerDisconnect(viewerId: string): void {
         if (!(viewerId in this.viewers)) {
-            throw "Attempted to remove nonexistent viewer from room. " +
-            "This likely indicates an error in the server implementation.";
+            throw (
+                "Attempted to remove nonexistent viewer from room. " +
+                "This likely indicates an error in the server implementation."
+            );
         }
 
         delete this.viewers[viewerId];
 
         // Notify the broadcaster of the disconnect
         const message: MessageViewerDisconnected = {
-            "type": "viewerdisconnected",
-            "viewerId": viewerId
+            type: "viewerdisconnected",
+            viewerId: viewerId,
         };
 
         this.broadcaster.send(JSON.stringify(message));
@@ -308,9 +318,10 @@ class Room {
     closeRoom(): void {
         for (const viewerId in this.viewers) {
             const viewer = this.viewers[viewerId];
-            const messageBroadcasterDisconnected: MessageBroadcasterDisconnected = {
-                "type": "broadcasterdisconnected"
-            };
+            const messageBroadcasterDisconnected: MessageBroadcasterDisconnected =
+                {
+                    type: "broadcasterdisconnected",
+                };
 
             viewer.send(JSON.stringify(messageBroadcasterDisconnected));
             viewer.close();
@@ -323,8 +334,14 @@ class Room {
  *
  * @param object
  */
-function instanceOfFromBroadcasterMessage(object: any): object is FromBroadcasterMessage {
-    return instanceOfMessageJoin(object) || instanceOfMessageWebRTCBroadcaster(object) || instanceOfMessageRequestViewers(object);
+function instanceOfFromBroadcasterMessage(
+    object: any
+): object is FromBroadcasterMessage {
+    return (
+        instanceOfMessageJoin(object) ||
+        instanceOfMessageWebRTCBroadcaster(object) ||
+        instanceOfMessageRequestViewers(object)
+    );
 }
 
 /**
@@ -333,7 +350,9 @@ function instanceOfFromBroadcasterMessage(object: any): object is FromBroadcaste
  * @param object
  */
 function instanceOfFromViewerMessage(object: any): object is FromViewerMessage {
-    return instanceOfMessageJoin(object) || instanceOfMessageWebRTCViewer(object);
+    return (
+        instanceOfMessageJoin(object) || instanceOfMessageWebRTCViewer(object)
+    );
 }
 
 /**
@@ -353,10 +372,15 @@ function instanceOfMessageJoin(object: any): object is MessageJoin {
  *
  * @param object
  */
-function instanceOfMessageWebRTCBroadcaster(object: any): object is MessageWebRTCBroadcaster {
+function instanceOfMessageWebRTCBroadcaster(
+    object: any
+): object is MessageWebRTCBroadcaster {
     const goodType = "type" in object && object.type === "webrtcbroadcaster";
-    const goodViewerId = "viewerId" in object && typeof object.viewerId === "string";
-    const goodKind = "kind" in object && ["offer", "answer", "candidate"].includes(object.kind);
+    const goodViewerId =
+        "viewerId" in object && typeof object.viewerId === "string";
+    const goodKind =
+        "kind" in object &&
+        ["offer", "answer", "candidate"].includes(object.kind);
     const goodMessage = "message" in object;
 
     return goodType && goodViewerId && goodKind && goodMessage;
@@ -367,7 +391,9 @@ function instanceOfMessageWebRTCBroadcaster(object: any): object is MessageWebRT
  *
  * @param object
  */
-function instanceOfMessageRequestViewers(object: any): object is MessageRequestViewers {
+function instanceOfMessageRequestViewers(
+    object: any
+): object is MessageRequestViewers {
     return "type" in object && object.type === "requestviewers";
 }
 
@@ -376,13 +402,16 @@ function instanceOfMessageRequestViewers(object: any): object is MessageRequestV
  *
  * @param object
  */
-function instanceOfMessageWebRTCViewer(object: any): object is MessageWebRTCViewer {
+function instanceOfMessageWebRTCViewer(
+    object: any
+): object is MessageWebRTCViewer {
     const goodType = "type" in object && object.type === "webrtcviewer";
-    const goodKind = "kind" in object && ["offer", "answer", "candidate"].includes(object.kind);
+    const goodKind =
+        "kind" in object &&
+        ["offer", "answer", "candidate"].includes(object.kind);
     const goodMessage = "message" in object;
 
     return goodType && goodKind && goodMessage;
 }
 
 main();
-

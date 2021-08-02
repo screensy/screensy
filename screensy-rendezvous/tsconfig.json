@@ -1,26 +1,18 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "target": "ES2018",
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strictNullChecks": true,
-    "alwaysStrict": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "strict": true,
-    "lib": [
-      "ES2018",
-      "DOM"
-    ]
-  },
-  "exclude": [
-    "/node_modules",
-    "/public"
-  ],
-  "files": [
-    "server.ts"
-  ]
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ES2018",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "alwaysStrict": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "strict": true,
+        "lib": ["ES2018", "DOM"]
+    },
+    "exclude": ["/node_modules", "/public"],
+    "files": ["server.ts"]
 }
