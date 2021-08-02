@@ -18,20 +18,50 @@ html, body {
     user-select: none;
 }
 
-#popup {
+#stream {
+    width: 100%;
+    height: 100%;
+}
+
+.popup {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     color: white;
-    text-align: center;
-    font-size: 2em;
-    font-family: "Verdana", sans-serif;
+    font-family: system-ui, sans-serif;
     user-select: none;
+    max-width: 40em;
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: 0 30px;
+    box-sizing: border-box;
 }
 
-#stream {
-    width: 100%;
-    height: 100%;
+.popup h1 {
+    font-size: 1.5em;
+}
+
+.popup p {
+    color: #e1e1e1;
+    line-height: 1.3;
+}
+
+.hidden {
+    display: none;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+@media screen and (min-width:800px) {
+    .popup h1 {
+        text-align: center;
+    }
+
+    .popup p {
+        text-align: justify;
+    }
 }
