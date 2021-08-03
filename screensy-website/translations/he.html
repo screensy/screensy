@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+    <head>
+        <meta charset="UTF-8" />
+        <title>screensy</title>
+        <meta name="description" content="שיתוף מסך פשוט בין אדם-לאדם" />
+        <meta name="application-name" content="screensy" />
+        <meta name="language" content="en" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="./styles.css" rel="stylesheet" />
+        <script type="text/javascript" src="./screensy.js"></script>
+    </head>
+    <body>
+        <noscript class="popup">
+            <h1>JavaScript אינו נתמך או לא מופעל.</h1>
+            <p>
+                screensy צריך תמיכה של JavaScript, אבל הדפדפן שלך אינו מספק זאת.
+                אנא השתמש בדפדפן שתומך ב-JavaScript וודא שהוא מופעל
+            </p>
+        </noscript>
+        <div id="access-denied" class="popup hidden">
+            <h1>אתה מנעת גישה למסך שלך.</h1>
+            <p>
+                screensy צריך גישה למסך שלך כדי לשתף אותו, אבל אתה מנעת את
+                הגישה. נסה לטעון מחדש את דף האינטרנט הזה ואפשר גישה כשהדפדפן
+                מבקש ממך. אם הדפדפן לא מבקש ממך גישה, בדוק את ההגדרות של הדפדפן
+                שלך.
+            </p>
+        </div>
+        <div id="screensharing-not-supported" class="popup hidden">
+            <h1>שיתוף מסך אינו נתמך או לא מופעל.</h1>
+            <p>
+                screensy אינו יכול לשתף את המסך שלך, כי הדפדפן שלך אינו נתמך, או
+                אינו מופעל. השתמש בדפדפן שתומך בשיתוף מסך וודא שהוא מופעל.
+            </p>
+        </div>
+        <div id="websockets-not-supported" class="popup hidden">
+            <h1>WebSocket אינו נתמך או אינו מופעל.</h1>
+            <p>
+                screensy צריך תמיכה של WebSocket, אבל הדפדפן שלך אינו מספק זאת.
+                השתמש בדפדפן שתומך ב-WebSocket וודא שהוא מופעל.
+            </p>
+        </div>
+        <div id="webrtc-not-supported" class="popup hidden">
+            <h1>WebRTC אינו נתמך או אינו מופעל.</h1>
+            <p>
+                screensy צריך תמיכה של WebRTC, אבל הדפדפן שלך אינו מספק זאת.
+                השתמש בדפדפן שתומך ב-WebRTC וודא שהוא מופעל.
+            </p>
+        </div>
+        <div id="mediastream-not-supported" class="popup hidden">
+            <h1>MediaStream אינו נתמך או לא מופעל.</h1>
+            <p>
+                screensy צריך תמיכה של MediaStream, אבל הדפדפן שלך אינו מספק
+                זאת. השתמש בדפדפן שתומך ב-MediaStream וודא שהוא מופעל.
+            </p>
+        </div>
+        <div id="websocket-connect-failed" class="popup hidden">
+            <h1>לא ניתן ליצור חיבור WebSocket.</h1>
+            <p>
+                screensy צריך ליצור חיבור WebSocket כדי לתקשר עם משתמשים אחרים,
+                אבל זה לא התאפשר. נסה להשתמש במכשיר אחר או לתקשר עם מנהל האתר.
+            </p>
+        </div>
+        <div id="broadcaster-disconnected" class="popup hidden">
+            <h1>המשדר התנתק.</h1>
+        </div>
+        <div id="click-to-share" class="popup clickable hidden">
+            <h1>תקליק בכל מקום כדי לשתף את המסך שלך.</h1>
+        </div>
+        <video
+            id="stream"
+            autoplay="autoplay"
+            muted="muted"
+            controls="controls"
+            playsinline="playsinline"
+        >
+            <div class="popup">
+                <h1>תגי וידאו אינם נתמכים.</h1>
+                <p>
+                    screensy צריך תמיכה בתגי וידאו, אבל הדפדפן שלך אינו מספק
+                    זאת. השתמש בדפדפן שתומך בתגי וידאו.
+                </p>
+            </div>
+        </video>
+    </body>
+</html>
