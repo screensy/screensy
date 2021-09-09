@@ -104,7 +104,14 @@ class Server {
      */
     onConnection(socket: WebSocket): void {
         socket.onmessage = (event: MessageEvent) => {
-            const message = JSON.parse(event.data);
+            let message;
+
+            try {
+                message = JSON.parse(event.data);
+            } catch (e) {
+                // The JSON message is invalid
+                return;
+            }
 
             if (message.type != "join") {
                 // No messages are valid until a client has sent a "JOIN"
@@ -173,8 +180,18 @@ class Room {
     constructor(broadcaster: WebSocket) {
         this.broadcaster = broadcaster;
 
-        broadcaster.onmessage = (event: MessageEvent) =>
-            this.handleBroadcasterMessage(JSON.parse(event.data));
+        broadcaster.onmessage = (event: MessageEvent) => {
+            let message;
+
+            try {
+                message = JSON.parse(event.data);
+            } catch (e) {
+                // The JSON message is invalid
+                return;
+            }
+
+            this.handleBroadcasterMessage(message);
+        };
 
         // Tell the client that he has been assigned the role "broadcaster"
         const message: MessageBroadcast = {
@@ -238,8 +255,19 @@ class Room {
     addViewer(viewer: WebSocket): void {
         const id: string = (this.counter++).toString();
 
-        viewer.onmessage = (event: MessageEvent) =>
-            this.handleViewerMessage(id, JSON.parse(event.data));
+        viewer.onmessage = (event: MessageEvent) => {
+            let message;
+
+            try {
+                message = JSON.parse(event.data);
+            } catch (e) {
+                // The JSON message is invalid
+                return;
+            }
+
+            this.handleViewerMessage(id, message);
+        };
+
         viewer.onclose = (_event: CloseEvent) =>
             this.handleViewerDisconnect(id);
 
