@@ -571,6 +571,7 @@ class Room {
         const audioConstraints: MediaTrackConstraints | boolean = {
             channelCount: { ideal: 2 },
             sampleRate: { ideal: 192000 },
+            // @ts-ignore
             noiseSuppression: { ideal: false },
             echoCancellation: { ideal: false },
             autoGainControl: { ideal: false },
@@ -799,7 +800,7 @@ async function main(_event: Event) {
     }
 
     // If the user manually changes the hash, force a reload
-    window.onhashchange = (_event: HashChangeEvent) => {
+    window.onhashchange = (_event: Event) => {
         location.reload();
     };
 
