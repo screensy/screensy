@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <title>screensy</title>
+        <meta name="description" content="Einfache Peer-to-Peer Bildschirmfreigabe" />
+        <meta name="application-name" content="screensy" />
+        <meta name="language" content="de" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="./styles.css" rel="stylesheet" />
+        <script type="text/javascript" src="./screensy.js"></script>
+    </head>
+    <body>
+        <noscript class="popup">
+            <h1>JavaScript wird nicht unterstützt oder ist nicht aktiviert.</h1>
+            <p>
+                Screensy benötigt JavaScript-Unterstützung, die Ihr Browser aber
+                nicht bietet. Verwenden Sie einen Browser, der JavaScript
+                unterstützt, und stellen Sie sicher, dass es aktiviert ist.
+            </p>
+        </noscript>
+        <div id="access-denied" class="popup hidden">
+            <h1>Sie haben den Zugriff auf Ihren Bildschirm verweigert.</h1>
+            <p>
+                Screensy benötigt die Erlaubnis auf Ihren Bildschirm zugreifen
+                zu dürfen, um ihn freigeben zu können, aber Sie haben den
+                Zugriff verweigert. Laden Sie die Seite neu und gestatten Sie
+                den Zugriff, wenn Ihr Browser Sie dazu auffordert. Falls Ihr
+                Browser Sie nicht auffordert, den Bildschirmzugriff freizugegeben,
+                überprüfen Sie Ihre Browsereinstellungen.
+            </p>
+        </div>
+        <div id="screensharing-not-supported" class="popup hidden">
+            <h1>Bildschirmfreigabe wird nicht unterstützt oder ist nicht aktiviert.</h1>
+            <p>
+                Screensy kann Ihren Bildschirm nicht freigeben, weil Ihr Browser
+                dies nicht unterstützt, oder es ist nicht aktiviert. Verwenden
+                Sie einen Browser, der die Bildschirmfreigabe unterstützt und
+                stellen Sie sicher, dass sie aktiviert ist.
+            </p>
+        </div>
+        <div id="websockets-not-supported" class="popup hidden">
+            <h1>WebSockets werden nicht unterstützt oder sind nicht aktiviert.</h1>
+            <p>
+                Screensy benötigt WebSocket-Unterstützung, die Ihr Browser aber
+                nicht bietet. Verwenden Sie einen Browser, der WebSockets
+                unterstützt, und stellen Sie sicher, dass sie aktiviert sind.
+            </p>
+        </div>
+        <div id="webrtc-not-supported" class="popup hidden">
+            <h1>WebRTC wird nicht unterstützt oder ist nicht aktiviert.</h1>
+            <p>
+                Screensy benötigt WebRTC-Unterstützung, die Ihr Browser aber
+                nicht bietet. Verwenden Sie einen Browser, der WebRTC
+                unterstützt, und stellen Sie sicher, dass es aktiviert ist.
+            </p>
+        </div>
+        <div id="mediastream-not-supported" class="popup hidden">
+            <h1>MediaStreams werden nicht unterstützt oder sind nicht aktiviert.</h1>
+            <p>
+                Screensy benötigt MediaStream-Unterstützung, die Ihr Browser aber
+                nicht bietet. Verwenden Sie einen Browser, der MediaStreams
+                unterstützt, und stellen Sie sicher, dass sie aktiviert sind.
+            </p>
+        </div>
+        <div id="websocket-connect-failed" class="popup hidden">
+            <h1>Eine WebSocket-Verbindung konnte nicht hergestellt werden.</h1>
+            <p>
+                Screensy muss eine WebSocket-Verbindung herstellen, um sich mit
+                anderen Benutzern zu verbinden, war dazu aber nicht in der Lage.
+                Versuchen Sie es mit einem anderen Gerät, oder wenden Sie sich
+                an den Administrator dieser Website.
+            </p>
+        </div>
+        <div id="broadcaster-disconnected" class="popup hidden">
+            <h1>Der Sender hat die Verbindung unterbrochen.</h1>
+        </div>
+        <div id="click-to-share" class="popup clickable hidden">
+            <h1>Klicken Sie hier, um Ihren Bildschirm freizugeben.</h1>
+        </div>
+        <video
+            id="stream"
+            autoplay="autoplay"
+            muted="muted"
+            controls="controls"
+            playsinline="playsinline"
+        >
+            <div class="popup">
+                <h1>Video-Elemente werden nicht unterstützt.</h1>
+                <p>
+                    Screensy benötigt Video-Element-Unterstützung, die Ihr Browser
+                    aber nicht bietet. Verwenden Sie einen Browser, der
+                    Video-Elemente unterstützt.
+                </p>
+            </div>
+        </video>
+    </body>
+</html>
