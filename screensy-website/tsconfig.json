@@ -8,7 +8,8 @@
         "strictNullChecks": true,
         "alwaysStrict": true,
         "strictFunctionTypes": true,
-        "strict": true
+        "strict": true,
+        "removeComments": false
     },
     "files": ["screensy.ts"]
 }
