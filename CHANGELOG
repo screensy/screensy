@@ -10,6 +10,10 @@ Semantic Versioning [1].
 UNRELEASED
 ----------
 
+
+1.6.1 - 2021-11-16
+------------------
+
 Added:
 - Add license information to the client code. As a result, the LibreJS browser
   extension [2] will not block the JavaScript code anymore.
