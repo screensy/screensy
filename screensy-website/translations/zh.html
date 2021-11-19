@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="UTF-8" />
+        <title>screensy</title>
+        <meta name="description" content="简易的点对点屏幕共享工具" />
+        <meta name="application-name" content="screensy" />
+        <meta name="language" content="zh" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="./styles.css" rel="stylesheet" />
+        <script type="text/javascript" src="./screensy.js"></script>
+    </head>
+    <body>
+        <noscript class="popup">
+            <h1>你的浏览器不支持Javascript，或该功能已被禁用。</h1>
+            <p>
+                使用Screensy需要用到JavaScript，但你的浏览器不支持该功能。
+                请更换为支持JavaScript的浏览器，或启用该功能。
+            </p>
+        </noscript>
+        <div id="access-denied" class="popup hidden">
+            <h1>你已拒绝访问你的屏幕。</h1>
+            <p>
+                Screensy需要你运行获取屏幕信息才能共享，但是权限申请被你拒绝了。
+                请尝试刷新该页面，并在浏览器请求屏幕权限时，允许该权限。
+                如果浏览器没有该提示，请检查浏览器设置。
+            </p>
+        </div>
+        <div id="screensharing-not-supported" class="popup hidden">
+            <h1>你的浏览器不支持共享屏幕，或该功能已被禁用。</h1>
+            <p>
+                由于该浏览器不支持共享屏幕，所以Screensy无法分享你的屏幕信息。
+                请更换为支持共享屏幕的浏览器，并确保已启用该功能。
+            </p>
+        </div>
+        <div id="websockets-not-supported" class="popup hidden">
+            <h1>你的浏览器不支持WebSocket，或该功能已被禁用。 </h1>
+            <p>
+                使用Screensy需要用到WebSocket，但你的浏览器不支持该功能。
+                请更换为支持WebSocket的浏览器，或启用该功能。
+            </p>
+        </div>
+        <div id="webrtc-not-supported" class="popup hidden">
+            <h1>你的浏览器不支持WebRTC，或该功能已被禁用。</h1>
+            <p>
+                使用Screensy需要用到WebRTC，但你的浏览器不支持该功能。
+                请更换为支持WebRTC的浏览器，或启用该功能。
+            </p>
+        </div>
+        <div id="mediastream-not-supported" class="popup hidden">
+            <h1>你的浏览器不支持媒体流，或该功能已被禁用。</h1>
+            <p>
+                使用Screensy需要用到媒体流功能，但你的浏览器不支持该功能。
+                请更换为支持媒体流功能的浏览器，或启用该功能。
+            </p>
+        </div>
+        <div id="websocket-connect-failed" class="popup hidden">
+            <h1>无法建立WebSocket连接。</h1>
+            <p>
+                Screensy需要建立WebSocket连接才能连接到其他用户，但是目前无法连接。
+                请尝试更换设备或与本站管理员联系。
+            </p>
+        </div>
+        <div id="broadcaster-disconnected" class="popup hidden">
+            <h1>主机已断开连接。</h1>
+        </div>
+        <div id="click-to-share" class="popup clickable hidden">
+            <h1>点击空白处分享你的屏幕内容。</h1>
+        </div>
+        <video
+            id="stream"
+            autoplay="autoplay"
+            muted="muted"
+            controls="controls"
+            playsinline="playsinline"
+        >
+            <div class="popup">
+                <h1>你的浏览器不支持Video标签，或该功能已被禁用。</h1>
+                <p>
+                    使用Screensy需要用到Video标签，但你的浏览器不支持该功能。
+                    请更换为支持Video标签的浏览器。
+                </p>
+            </div>
+        </video>
+    </body>
+</html>
