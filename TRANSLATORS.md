@@ -1,4 +1,4 @@
-TRANSLATORS
+Translators
 ===========
 
 Special thanks to all the people who have helped translate screensy so far:
