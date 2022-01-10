@@ -10,6 +10,10 @@ Semantic Versioning [1].
 UNRELEASED
 ----------
 
+Fixed:
+- The message shown if the user does not have JavaScript enabled will now be
+  styled correctly.
+
 1.7.0 - 2021-11-19
 ------------------
 
