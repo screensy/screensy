@@ -48,6 +48,10 @@ SERVER SETUP (WITH DOCKER)
     	reverse_proxy @rendezvous rendezvous:4000
     }
 
+    Note there are also two commented out blocks that allow you to use http
+    basic auth to protect your screen sharing while allowing the listed IP
+    addresses to bypass entering credentials.
+
 5. Change the value of the "external-ip" setting in the included
    "turnserver.conf" from "localhost" to your domain. For example if you want
    to host screensy on the domain "example.com", the first two lines of your
@@ -57,7 +61,7 @@ SERVER SETUP (WITH DOCKER)
     external-ip=example.com
 
 6. Make sure the required ports are accessible. We listed these ports at the
-   bottom of this document. 
+   bottom of this document.
 
 7. Start the Docker containers using Docker Compose, by running the following
    command:
@@ -143,6 +147,10 @@ SERVER SETUP (WITHOUT DOCKER)
      }
 
     Keep in mind that most web browsers require HTTPS for WebRTC to work.
+
+    Note there are also two commented out blocks that allow you to use http
+    basic auth to protect your screen sharing while allowing the listed IP
+    addresses to bypass entering credentials.
 
 
 PORTS

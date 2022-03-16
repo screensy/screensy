@@ -1,10 +1,19 @@
 localhost {
-	reverse_proxy website:8080
 
-	@rendezvous {
-		header Connection *Upgrade*
-		header Upgrade websocket
-	}
+  # @needauth {
+  #   not remote_ip 11.11.11.11/11 11.111.111.111/11 # Replace with your IP's
+  # }
 
-	reverse_proxy @rendezvous rendezvous:4000
+  # basicauth @needauth {
+  #   username <result of `caddy hash-password` (prompts for password)>
+  # }
+
+  reverse_proxy website:8080
+
+  @rendezvous {
+    header Connection *Upgrade*
+    header Upgrade websocket
+  }
+
+  reverse_proxy @rendezvous rendezvous:4000
 }
