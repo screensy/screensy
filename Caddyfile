@@ -1,4 +1,8 @@
 localhost {
+	# basicauth {
+	# 	<username> <hash>
+	# }
+
 	reverse_proxy website:8080
 
 	@rendezvous {
