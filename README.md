@@ -48,6 +48,7 @@ recommend using Docker.
 
 5.  _Optional_: password-protect your screensy instance using the method
     described at the bottom of this document.
+
 6.  Change the value of the "external-ip" setting in the included
     "turnserver.conf" from "localhost" to your domain. For example if you want
     to host screensy on the domain "example.com", the first two lines of your
