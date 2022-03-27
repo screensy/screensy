@@ -271,7 +271,7 @@ class Room {
         viewer.onclose = (_event: CloseEvent) =>
             this.handleViewerDisconnect(id);
 
-        // Tell the client that he has been assigned the role "broadcaster"
+        // Tell the client that he has been assigned the role "viewer"
         const messageView: MessageView = {
             type: "view",
         };
