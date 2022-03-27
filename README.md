@@ -156,8 +156,8 @@ Authentication.
     The command will ask you for a password and will then give you a hash. Make
     sure to copy this hash, because you need it in the next step.
 
-3.  Uncomment (remove the hashtags before) the following lines in the Caddyfile,
-    and replace the username and hash.
+3.  Uncomment the following lines in the Caddyfile, and replace the username and 
+    hash.
 
         basicauth {
             <username> <hash>
