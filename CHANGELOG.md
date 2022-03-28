@@ -5,7 +5,7 @@ All notable changes to the screensy project will be documented in this file.
 The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning].
 
-## Unreleased
+## 1.7.1 - 2022-03-28
 
 ### Fixed
 
