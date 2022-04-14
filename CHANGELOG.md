@@ -35,19 +35,19 @@ The format is based on [Keep a Changelog], and this project adheres to
 
 -   Add the Czech translation.
 
-    1.5.0 - 2021-10-03
+## 1.5.0 - 2021-10-03
 
 ### Added
 
 -   Add the German translation.
 
-    1.4.0 - 2021-09-17
+## 1.4.0 - 2021-09-17
 
 ### Added
 
 -   Add the Japanese translation.
 
-    1.3.1 - 2021-09-09
+## 1.3.1 - 2021-09-09
 
 ### Security
 
