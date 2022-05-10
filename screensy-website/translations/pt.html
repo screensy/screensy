@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta charset="UTF-8" />
+        <title>screensy</title>
+        <meta name="description" content="Compartilhamento de tela peer-to-peer simples" />
+        <meta name="application-name" content="screensy" />
+        <meta name="language" content="pt" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="./styles.css" rel="stylesheet" />
+        <script type="text/javascript" src="./screensy.js"></script>
+    </head>
+    <body>
+        <noscript>
+            <div class="popup">
+                <h1>JavaScript não é suportado ou não está habilitado.</h1>
+                <p>
+                    O Screensy request suporte a JavaScript, mas seu navegador
+                    não o provê. Use um navegador que tenha suporte a JavaScript
+                    e garanta que este esteja habilitado.
+                </p>
+            </div>
+        </noscript>
+        <div id="access-denied" class="popup hidden">
+            <h1>Você negou o acesso à sua tela.</h1>
+            <p>
+                O Screensy precisa de acesso à sua tela para a conseguir
+                compartilhar, mas você negou tal acesso. Tente recarregar esta
+                página e conceder acesso quando seu navegador pedir. Se seu
+                navegador não pedir acesso à tela, consulte as configurações do
+                navegador.
+            </p>
+        </div>
+        <div id="screensharing-not-supported" class="popup hidden">
+            <h1>O compartilhamento de tela não é suportado ou não está habilitado.</h1>
+            <p>
+                O Screensy não consegue compartilhar a sua tela, pois o
+                navegador não dá suporte a esta operação, ou o suporte não está
+                habilitado. Use um navegador com suporte a compartilhamento de
+                tela e garanta que este esteja habilitado.
+            </p>
+        </div>
+        <div id="websockets-not-supported" class="popup hidden">
+            <h1>WebSocket não é suportado ou não está habilitado.</h1>
+            <p>
+                O Screensy precisa de suporte ao protocolo WebSocket, mas seu
+                navegador não o provê. Use um navegador que tenha suporte a
+                WebSocket e garanta que ele esteja habilitado.
+            </p>
+        </div>
+        <div id="webrtc-not-supported" class="popup hidden">
+            <h1>WebRTC não é suportado ou não está habilitado.</h1>
+            <p>
+                O Screensy precisa de suporte a WebRTC, mas seu navegador não o
+                provê. Use um navegador que tenha suporte a WebRTC e garanta que
+                ele esteja habilitado.
+            </p>
+        </div>
+        <div id="mediastream-not-supported" class="popup hidden">
+            <h1>MediaStream não é suportado ou não está habilitado.</h1>
+            <p>
+                O Screensy precisa de suporte a MediaStream, mas seu navegador
+                não o provê. Use um navegador com suporte a MediaStream e
+                garanta que ele esteja habilitado.
+            </p>
+        </div>
+        <div id="websocket-connect-failed" class="popup hidden">
+            <h1>Não foi possível estabelecer a conexão WebSocket.</h1>
+            <p>
+                O Screensy precisa estabelecer uma conexão WebSocket com outros
+                usuários, mas não o conseguiu fazer. Tente usar outro
+                dispositivo ou contate o administrador deste website.
+            </p>
+        </div>
+        <div id="broadcaster-disconnected" class="popup hidden">
+            <h1>O transmissor desconectou.</h1>
+        </div>
+        <div id="click-to-share" class="popup clickable hidden">
+            <h1>Clique para compartilhar a sua tela.</h1>
+        </div>
+        <video
+            id="stream"
+            autoplay="autoplay"
+            muted="muted"
+            controls="controls"
+            playsinline="playsinline"
+        >
+            <div class="popup">
+                <h1>Tags de vídeo não são suportadas.</h1>
+                <p>
+                    O Screensy precisa de suporte à tag video, mas seu navegador
+                    não o provê. Use um navegador com suporte às tags de vídeo.
+                </p>
+            </div>
+        </video>
+    </body>
+</html>
