@@ -39,4 +39,8 @@ Special thanks to all the people who have helped translate screensy so far:
 
 -   MIDORIINKO
 
+### Portuguese
+
+-   d3adb5
+
 [pull request #32]: https://github.com/screensy/screensy/pull/32
