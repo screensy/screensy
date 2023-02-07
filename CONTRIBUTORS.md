@@ -27,6 +27,10 @@ Special thanks to all the people who have helped translate screensy so far:
 -   Marijn van Wezel
 -   Stef Gijsberts
 
+### French
+
+-   Nakda
+
 ### German
 
 -   heavygale
