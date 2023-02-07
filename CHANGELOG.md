@@ -5,6 +5,12 @@ All notable changes to the screensy project will be documented in this file.
 The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning].
 
+## 1.8.0 - 2022-05-09
+
+### Added
+
+-   Add the Portuguese translation.
+
 ## 1.7.1 - 2022-03-28
 
 ### Fixed
