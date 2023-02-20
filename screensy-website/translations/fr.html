@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>screensy</title>
+        <meta name="description" content="Partage d'écran simple pair-à-pair" />
+        <meta name="application-name" content="screensy" />
+        <meta name="language" content="fr" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="./styles.css" rel="stylesheet" />
+        <script type="text/javascript" src="./screensy.js"></script>
+    </head>
+    <body>
+        <noscript>
+            <div class="popup">
+                <h1>JavaScript n'est pas pris en charge ou n'est pas activé.</h1>
+                <p>
+                    Screensy nécessite la prise en charge de JavaScript, mais 
+                    votre navigateur ne le permet pas. Utilisez un navigateur qui 
+                    prend en charge JavaScript et assurez-vous qu'il soit activé.
+                </p>
+            </div>
+        </noscript>
+        <div id="access-denied" class="popup hidden">
+            <h1>Vous avez refusé l'accès à votre écran.</h1>
+            <p>
+                Screensy a besoin d'accéder à votre écran afin de le partager,
+                mais vous lui en avez refusé l'accès. Essayez de recharger cette
+                page et autorisez la demande d'accès lorsque votre navigateur vous
+                le demande. Si votre navigateur ne vous demande pas d'autorisation
+                d'accès, vérifiez les paramètres de votre navigateur.
+            </p>
+        </div>
+        <div id="screensharing-not-supported" class="popup hidden">
+            <h1>Le partage d'écran n'est pas pris en charge ou n'est pas activé.</h1>
+            <p>
+                Screensy ne peut pas partager votre écran car votre navigateur
+                ne prend pas en charge le partage d'écran, ou parce qu'il n'est pas
+                activé. Utilisez un navigateur qui prend en charge le partage d'écran
+                et assurez-vous qu'il soit activé.
+            </p>
+        </div>
+        <div id="websockets-not-supported" class="popup hidden">
+            <h1>WebSocket n'est pas pris en charge ou n'est pas activé.</h1>
+            <p>
+                Screensy a besoin de la prise en charge de WebSocket, mais 
+                votre navigateur ne le permet pas. Utilisez un navigateur
+                qui prend en charge WebSocket et assurez-vous que qu'il soit activé.
+            </p>
+        </div>
+        <div id="webrtc-not-supported" class="popup hidden">
+            <h1>WebRTC n'est pas pris en charge ou n'est pas activé.</h1>
+            <p>
+                Screensy a besoin de la prise en charge de WebRTC, mais votre
+                navigateur ne le permet pas. Utilisez un navigateur qui prend en
+                charge WebRTC et assurez-vous qu'il soit activé.
+            </p>
+        </div>
+        <div id="mediastream-not-supported" class="popup hidden">
+            <h1>MediaStream n'est pas pris en charge ou n'est pas activé.</h1>
+            <p>
+                Screensy a besoin de la prise en charge de MediaStream, mais votre
+                navigateur ne le permet pas. Utilisez un navigateur qui prend en
+                charge MediaStream et assurez-vous qu'il soit activé.
+            </p>
+        </div>
+        <div id="websocket-connect-failed" class="popup hidden">
+            <h1>Impossible d'établir une connexion WebSocket.</h1>
+            <p>
+                Screensy doit établir une connexion WebSocket pour se connecter à
+                d'autres utilisateurs, mais il n'y est pas parvenu. Essayez d'utiliser
+                un autre appareil ou contactez l'administrateur de ce site.
+            </p>
+        </div>
+        <div id="broadcaster-disconnected" class="popup hidden">
+            <h1>Le diffuseur s'est déconnecté.</h1>
+        </div>
+        <div id="click-to-share" class="popup clickable hidden">
+            <h1>Cliquez n'importe où pour partager votre écran.</h1>
+        </div>
+        <video
+            id="stream"
+            autoplay="autoplay"
+            muted="muted"
+            controls="controls"
+            playsinline="playsinline"
+        >
+            <div class="popup">
+                <h1>Les balises vidéo ne sont pas prises en charge.</h1>
+                <p>
+                    Screensy a besoin de la prise en charge des balises vidéo, mais
+                    votre navigateur ne le permet pas. Utilisez un navigateur qui
+                    prend en charge les balises vidéo.
+                </p>
+            </div>
+        </video>
+    </body>
+</html>
